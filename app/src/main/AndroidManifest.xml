@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="to426.com.peerpressure">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".JoinCreateGameActivity" />
+        <activity android:name=".JoinGameActivity" />
+        <activity android:name=".LobbyHoldingActivity" />
+        <activity android:name=".CreateNewGameActivity" />
+        <activity android:name=".JoinGameLobbyActivity" />
+        <activity android:name=".CreateNewGameLobbyActivity" />
+        <activity android:name=".RoundSplashActivity" />
+        <activity android:name=".REnterDareActivity" />
+        <activity android:name=".RReadyVoteActivity" />
+        <activity android:name=".RVoteActiveActivity" />
+        <activity android:name=".RVoteWaitActivity" />
+        <activity android:name=".RVoteActiveWinnerSplash" />
+        <activity android:name=".RDareWinnerActivity" />
+        <activity android:name=".RDareLoserActivity" />
+        <activity android:name=".RVotePerformanceActivity" />
+        <activity android:name=".REndOfRoundsActivity" />
+        <activity android:name=".FLeaderDareEnterActivity" />
+        <activity android:name=".FLobbyDareHoldActivity" />
+        <activity android:name=".FFinalDareSplashActivity" />
+        <activity android:name=".FFinalVoteActivity" />
+        <activity android:name=".FDarePerformanceActivity" />
+        <activity android:name=".FLeaderboardSplash" />
+        <activity android:name=".RulesActivity" />
+        <activity android:name=".FPerformaceCompleteConfirmActivity" />
+        <activity android:name=".FLosersHoldActivity"></activity>
+    </application>
+
+</manifest>

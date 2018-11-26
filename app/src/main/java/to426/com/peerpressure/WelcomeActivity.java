@@ -1,8 +1,11 @@
 package to426.com.peerpressure;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +27,18 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         beginButton.setOnClickListener(this);
 
+
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
     public void onClick(View v) {
 
         Intent welcomeToLogin = new Intent(WelcomeActivity.this, LoginActivity.class);
-
 
         if (v == beginButton)
         {

@@ -82,11 +82,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    //Disable Back Button
-    @Override
-    public void onBackPressed() {
-    }
-
     private void registerUser(String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)

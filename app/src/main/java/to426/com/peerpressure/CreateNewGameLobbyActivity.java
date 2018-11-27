@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CreateNewGameLobbyActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button startGameButton;
+    public TextView lobbyCodeTextView;
+    public String lobbyCode = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +25,19 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         startGameButton = (Button) findViewById(R.id.startGameButton);
+        lobbyCodeTextView = (TextView) findViewById(R.id.lobbyCode);
 
         startGameButton.setOnClickListener(this);
+
+        Intent retrieveCode = getIntent();
+        Bundle bundle = retrieveCode.getExtras();
+
+        if(bundle != null)
+        {
+            lobbyCode = (String) bundle.get("lobbyCode");
+            lobbyCodeTextView.setText(lobbyCode);
+        }
+
 
 
     }
@@ -30,11 +45,8 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
 
-        Intent createNewGameLobbyToRoundSplash = new Intent(CreateNewGameLobbyActivity.this, RoundSplashActivity.class);
-
 
         if (v == startGameButton){
-            startActivity(createNewGameLobbyToRoundSplash);
         }
 
     }

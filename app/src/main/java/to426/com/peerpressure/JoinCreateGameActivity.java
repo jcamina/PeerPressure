@@ -32,6 +32,11 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
 
     }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     public void onClick(View v) {
 

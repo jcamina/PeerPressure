@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,9 +23,9 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
     public Button submitButton;
     public TextView currentPlayerNameTextView;
+    public EditText enterDareEditText;
 
     public String lobbyCode = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
         submitButton = (Button) findViewById(R.id.submitButton);
         currentPlayerNameTextView = (TextView) findViewById(R.id.currentPlayerNameTextView);
+        enterDareEditText = (EditText) findViewById(R.id.enterDareEditText);
 
         submitButton.setOnClickListener(this);
 
@@ -72,14 +75,38 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    public void submitDare() {
+
+        String dareSubmissionText = enterDareEditText.getText().toString();
+
+        if (dareSubmissionText.isEmpty()) {
+            Toast.makeText(this, "ERROR: No Text Inputted!", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
+                    .setValue(new Dare(UID, dareSubmissionText,1));
+
+
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
 
 
-        if (v == submitButton){
-
+        if (v == submitButton) {
+            //submitDare();
         }
 
     }
-}
+
+
+
+
+    }
+
+

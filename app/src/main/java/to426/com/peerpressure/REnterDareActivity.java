@@ -3,6 +3,7 @@ package to426.com.peerpressure;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
     public Button submitButton;
     public TextView currentPlayerNameTextView;
     public EditText enterDareEditText;
+    public TextView inRoundTimerTextView;
 
     public String lobbyCode = "";
 
@@ -38,6 +40,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         submitButton = (Button) findViewById(R.id.submitButton);
         currentPlayerNameTextView = (TextView) findViewById(R.id.currentPlayerNameTextView);
         enterDareEditText = (EditText) findViewById(R.id.enterDareEditText);
+        inRoundTimerTextView = (TextView)  findViewById(R.id.inRoundTimerTextView);
 
         submitButton.setOnClickListener(this);
 
@@ -47,6 +50,20 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         if (bundle != null) {
             lobbyCode = (String) bundle.get("lobbyCode");
         }
+
+        new CountDownTimer(90000, 1000) {
+            public void onFinish() {
+
+                submitDare();
+
+                finish();
+            }
+
+            public void onTick(long millisUntilFinished) {
+                inRoundTimerTextView.setText("00:0" + millisUntilFinished / 1000);
+            }
+
+        }.start();
 
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
@@ -87,9 +104,12 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
             String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
-                    .setValue(new Dare(UID, dareSubmissionText,1));
+                    .child(UID).setValue(new Dare(UID, dareSubmissionText,0));
 
-
+            Intent REnterDareToRReadyVote = new Intent(REnterDareActivity.this,RReadyVoteActivity.class);
+            REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
+            startActivity(REnterDareToRReadyVote);
+            
         }
     }
 

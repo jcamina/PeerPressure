@@ -63,33 +63,32 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
 
         if (v == enterButton){
 
-            Intent createNewGameToNewGameLobby = new Intent(CreateNewGameActivity.this, CreateNewGameLobbyActivity.class);
+            Intent createNewGameToNewGameLobby = new Intent(CreateNewGameActivity.this,
+                    CreateNewGameLobbyActivity.class);
 
-            String gameCode = createNewGame();
+            String lobbyCode = createNewGame();
 
-            Toast.makeText(this,  gameCode, Toast.LENGTH_SHORT).show();
-
-            //Send the Game Code To The Next Screen
-            createNewGameToNewGameLobby.putExtra("lobbyCode", gameCode);
-
-            startActivity(createNewGameToNewGameLobby);
+            if (!(lobbyCode.equals("Error"))) {
+                //Send the Game Code To The Next Screen
+                createNewGameToNewGameLobby.putExtra("lobbyCode", lobbyCode);
+                startActivity(createNewGameToNewGameLobby);
+            }
         }
     }
 
     public String createNewGame() {
 
-        boolean validNickname = false;
-
-        final String NICKNAME = nicknameEditText.getText().toString();
         final int SCORE  = 0;
         final boolean ISHOST = true;
         final String UIDHOST = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String LOBBYCODE = getGameCode();
+        final String NICKNAME = nicknameEditText.getText().toString();
 
 
-        while (!validNickname)
             if (NICKNAME.isEmpty()) {
                 Toast.makeText(this, "ERROR: Enter A Nickname!", Toast.LENGTH_SHORT).show();
+
+                return "Error";
 
             } else {
 
@@ -98,9 +97,9 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
 
                 Toast.makeText(this, "Lobby Successfully Created!", Toast.LENGTH_SHORT).show();
 
-                validNickname = true;
-        }
-            return LOBBYCODE;
+                return LOBBYCODE;
+
+            }
     }
 
     protected String getGameCode() {
@@ -108,7 +107,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         StringBuilder code = new StringBuilder();
         Random rnd = new Random();
 
-        while (code.length() < 7) { // length of the random string.
+        while (code.length() < 6) { // length of the random string.
             int index = (int) (rnd.nextFloat() * AVAILCHARS.length());
             code.append(AVAILCHARS.charAt(index));
         }

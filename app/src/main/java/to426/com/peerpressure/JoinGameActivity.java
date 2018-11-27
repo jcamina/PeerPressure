@@ -60,27 +60,27 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        Intent joinGameToJoinGameLobby = new Intent(JoinGameActivity.this, JoinGameLobbyActivity.class);
-
         if (v == enterButton){
 
-            joinGame();
+           joinGame();
 
-            //startActivity(joinGameToJoinGameLobby);
+
+
+
         }
     }
 
     public void joinGame() {
         final String NICKNAME = nicknameEditText.getText().toString();
-        final String GAMECODE = lobbyCodeEditText.getText().toString().toUpperCase();
+        final String LOBBYCODE = lobbyCodeEditText.getText().toString().toUpperCase();
 
-        final int SCORE  = 0;
+        final int SCORE = 0;
         final boolean ISHOST = false;
         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        if (NICKNAME.isEmpty() || GAMECODE.isEmpty()) {
+        if (NICKNAME.isEmpty() || LOBBYCODE.isEmpty()) {
 
-            Toast.makeText(this,"ERROR: Please enter Nickname AND Lobby Code!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "ERROR: Please enter Nickname AND Lobby Code!", Toast.LENGTH_SHORT).show();
 
             nicknameEditText.startAnimation(shakeError());//shake animation ;)
             lobbyCodeEditText.startAnimation(shakeError());//shake animation ;)
@@ -88,9 +88,10 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
             nicknameEditText.setText("");
             lobbyCodeEditText.setText("");
 
-        }  else {
+        } else {
+
             final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
-                    .child("Games").child(GAMECODE);
+                    .child("Games").child(LOBBYCODE);
 
             lobbyCheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -100,18 +101,23 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
                         if (!(dataSnapshot.child("Players").child(UIDCLIENT).exists())) {
 
-                            gameRef.child("Games").child(GAMECODE).child("Players").child(UIDCLIENT)
+                            gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDCLIENT)
                                     .setValue(new Player(UIDCLIENT, NICKNAME, SCORE, ISHOST));
 
                             Toast.makeText(JoinGameActivity.this, "Lobby Joined Successfully!", Toast.LENGTH_SHORT).show();
 
+                            Intent joinGameToJoinGameLobby = new Intent(JoinGameActivity.this, JoinGameLobbyActivity.class);
+                            joinGameToJoinGameLobby.putExtra("lobbyCode", LOBBYCODE);
+                            startActivity(joinGameToJoinGameLobby);
+
                         } else {
-                            Toast.makeText(JoinGameActivity.this,"ERROR: Somebody is Using Your Username!",
+                            Toast.makeText(JoinGameActivity.this, "ERROR: Somebody is Already Logged-in With This Account!",
                                     Toast.LENGTH_SHORT).show();
+
                         }
 
                     } else {
-                        Toast.makeText(JoinGameActivity.this,"ERROR: Lobby " + GAMECODE + " Does Not Exist!",
+                        Toast.makeText(JoinGameActivity.this, "ERROR: Lobby " + LOBBYCODE + " Does Not Exist!",
                                 Toast.LENGTH_SHORT).show();
 
                         nicknameEditText.startAnimation(shakeError());//shake animation ;)
@@ -120,9 +126,10 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
                         nicknameEditText.setText("");
                         lobbyCodeEditText.setText("");
 
-
                     }
                 }
+
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -131,8 +138,9 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
             });
 
         }
-
     }
+
+
 
     public TranslateAnimation shakeError() {
         TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);

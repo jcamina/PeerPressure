@@ -8,11 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CreateNewGameLobbyActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button startGameButton;
     public TextView lobbyCodeTextView;
+    public TextView lobbyPlayersTextView;
     public String lobbyCode = "";
 
 
@@ -26,6 +36,7 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
         startGameButton = (Button) findViewById(R.id.startGameButton);
         lobbyCodeTextView = (TextView) findViewById(R.id.lobbyCode);
+        lobbyPlayersTextView = (TextView) findViewById(R.id.lobbyPlayersTextView);
 
         startGameButton.setOnClickListener(this);
 
@@ -38,15 +49,61 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
             lobbyCodeTextView.setText(lobbyCode);
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final ArrayList<String> playerNames = new ArrayList();
+
+
+        final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
+                .child("Games").child(lobbyCode);
+
+        lobbyCheckRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+
+                    for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
+
+                        //If Borrow Byy Value Matches, Add to Array List "Books"
+                        Player currentPlayer = data.getValue(Player.class);
+                        playerNames.add(currentPlayer.getNickname());
+                    }
+
+                    // StringBuilder Used to Print Array List To TextView
+                    StringBuilder builder = new StringBuilder();
+                    for (String details : playerNames) {
+                        builder.append(details + "\n");
+                    }
+
+                    lobbyPlayersTextView.setText(builder.toString());
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
 
 
     }
+
 
     @Override
     public void onClick(View v) {
 
 
         if (v == startGameButton){
+
+
         }
 
     }

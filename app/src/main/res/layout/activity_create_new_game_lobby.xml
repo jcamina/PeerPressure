@@ -7,46 +7,17 @@
     tools:context=".CreateNewGameLobbyActivity">
 
     <TextView
-        android:id="@+id/name3"
-        android:layout_width="85dp"
-        android:layout_height="41dp"
-        android:text="Jordan"
+        android:id="@+id/lobbyPlayersTextView"
+        android:layout_width="215dp"
+        android:layout_height="180dp"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.688" />
-
-    <TextView
-        android:id="@+id/name2"
-        android:layout_width="85dp"
-        android:layout_height="41dp"
-        android:text="Danny"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.53" />
-
-    <TextView
-        android:id="@+id/name1"
-        android:layout_width="85dp"
-        android:layout_height="41dp"
-        android:text="Mugdh"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.347" />
+        app:layout_constraintVertical_bias="0.542" />
 
     <TextView
         android:id="@+id/playersJoined"
@@ -63,13 +34,13 @@
 
     <TextView
         android:id="@+id/lobbyCode"
-        android:layout_width="90dp"
-        android:layout_height="37dp"
+        android:layout_width="116dp"
+        android:layout_height="38dp"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.734"
+        app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.06" />

@@ -99,7 +99,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
 
         if (v == submitButton) {
-            //submitDare();
+            submitDare();
         }
 
     }

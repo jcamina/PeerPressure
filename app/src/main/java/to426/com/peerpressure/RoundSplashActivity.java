@@ -45,9 +45,10 @@ public class RoundSplashActivity extends AppCompatActivity {
         new CountDownTimer(6000, 1000) {
             public void onFinish() {
                 Intent roundSplashToEnterDare = new Intent(RoundSplashActivity.this,REnterDareActivity.class);
+
                 roundSplashToEnterDare.putExtra("lobbyCode", lobbyCode);
                 startActivity(roundSplashToEnterDare);
-                
+
                 finish();
             }
 

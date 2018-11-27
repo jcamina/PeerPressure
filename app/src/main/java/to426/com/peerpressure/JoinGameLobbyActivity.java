@@ -27,8 +27,7 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         lobbyPlayersJoinTextView = (TextView) findViewById(R.id.lobbyPlayersJoinTextView);
-
-        c
+        
 
     }
 

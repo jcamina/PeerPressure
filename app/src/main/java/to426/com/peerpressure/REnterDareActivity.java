@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class REnterDareActivity extends AppCompatActivity implements View.OnClickListener{
 
     public Button submitButton;
-    public TextView nameTextView;
+    public TextView currentPlayerNameTextView;
 
     public String lobbyCode = "";
 
@@ -34,6 +34,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         submitButton = (Button) findViewById(R.id.submitButton);
+        currentPlayerNameTextView = (TextView) findViewById(R.id.currentPlayerNameTextView);
 
         submitButton.setOnClickListener(this);
 
@@ -57,7 +58,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
                     Player currentPlayer = dataSnapshot.getValue(Player.class);
 
-                    nameTextView.setText(currentPlayer.getNickname());
+                    currentPlayerNameTextView.setText(currentPlayer.getNickname() + ",");
 
                 }
             }
@@ -77,7 +78,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
 
         if (v == submitButton){
-    
+
         }
 
     }

@@ -70,6 +70,8 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
                         joinGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
                         startActivity(joinGameLobbyToRoundSplash);
+
+                        finishAffinity();
                     }
                 }
 

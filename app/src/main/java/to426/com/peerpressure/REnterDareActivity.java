@@ -60,7 +60,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
             }
 
             public void onTick(long millisUntilFinished) {
-                inRoundTimerTextView.setText("00:0" + millisUntilFinished / 1000);
+                inRoundTimerTextView.setText( (millisUntilFinished / 1000) + "Seconds");
             }
 
         }.start();
@@ -109,7 +109,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
             Intent REnterDareToRReadyVote = new Intent(REnterDareActivity.this,RReadyVoteActivity.class);
             REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
             startActivity(REnterDareToRReadyVote);
-            
+
         }
     }
 

@@ -20,17 +20,20 @@
         app:layout_constraintVertical_bias="0.542" />
 
     <TextView
-        android:id="@+id/playersJoined"
-        android:layout_width="170dp"
-        android:layout_height="41dp"
+        android:id="@+id/PlayersTitleTextView"
+        android:layout_width="218dp"
+        android:layout_height="38dp"
         android:text="Players Joined:"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.2" />
+        android:gravity="center|top"
+        app:layout_constraintVertical_bias="0.225" />
 
     <TextView
         android:id="@+id/lobbyCode"

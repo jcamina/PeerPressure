@@ -37,7 +37,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
         startGameButton = (Button) findViewById(R.id.startGameButton);
         lobbyCodeTextView = (TextView) findViewById(R.id.lobbyCode);
         lobbyPlayersTextView = (TextView) findViewById(R.id.lobbyPlayersTextView);
-
         startGameButton.setOnClickListener(this);
 
         Intent retrieveCode = getIntent();
@@ -55,9 +54,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
     protected void onStart() {
         super.onStart();
 
-        final ArrayList<String> playerNames = new ArrayList();
-
-
         final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
@@ -65,23 +61,17 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                lobbyPlayersTextView.setText("");
+
                 if (dataSnapshot.exists()) {
 
-
                     for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
-
                         //If Borrow Byy Value Matches, Add to Array List "Books"
                         Player currentPlayer = data.getValue(Player.class);
-                        playerNames.add(currentPlayer.getNickname());
+                        lobbyPlayersTextView.append(currentPlayer.getNickname() + "\n\n");
+
                     }
 
-                    // StringBuilder Used to Print Array List To TextView
-                    StringBuilder builder = new StringBuilder();
-                    for (String details : playerNames) {
-                        builder.append(details + "\n");
-                    }
-
-                    lobbyPlayersTextView.setText(builder.toString());
                 }
 
             }

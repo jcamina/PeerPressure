@@ -59,6 +59,18 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
                         lobbyPlayersJoinTextView.append(currentPlayer.getNickname() + "\n\n");
 
                     }
+
+                    GameProperties properties = dataSnapshot.child("Properties")
+                            .getValue(GameProperties.class);
+
+                    if (properties.getGameProgression().equals("Round 1")){
+
+                        Intent joinGameLobbyToRoundSplash = new Intent(JoinGameLobbyActivity.this,
+                                RoundSplashActivity.class);
+
+                        joinGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
+                        startActivity(joinGameLobbyToRoundSplash);
+                    }
                 }
 
             }

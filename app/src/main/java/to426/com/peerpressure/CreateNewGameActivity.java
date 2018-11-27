@@ -95,6 +95,9 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
                 gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDHOST).
                         setValue(new Player(UIDHOST, NICKNAME, SCORE, ISHOST));
 
+                gameRef.child("Games").child(LOBBYCODE).child("Properties").
+                        setValue(new GameProperties("Lobby","Default"));
+
                 Toast.makeText(this, "Lobby Successfully Created!", Toast.LENGTH_SHORT).show();
 
                 return LOBBYCODE;

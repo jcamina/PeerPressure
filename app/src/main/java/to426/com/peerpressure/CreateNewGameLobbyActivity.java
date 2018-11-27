@@ -91,10 +91,40 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
 
 
-        if (v == startGameButton){
+        if (v == startGameButton) {
 
+            final DatabaseReference lobbyRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Games").child(lobbyCode).child("Properties");
 
+            lobbyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+
+                        GameProperties properties = dataSnapshot.getValue(GameProperties.class);
+
+                            if (properties.getGameProgression().equals("Lobby")){
+
+                                properties.setGameProgression("Round 1");
+
+                                lobbyRef.setValue(properties);
+
+                                Intent newGameLobbyToRoundSplash = new Intent(CreateNewGameLobbyActivity.this,
+                                        RoundSplashActivity.class);
+
+                                newGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
+                                startActivity(newGameLobbyToRoundSplash);
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // ...
+                }
+            });
         }
-
     }
 }

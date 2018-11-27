@@ -19,7 +19,10 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:entries="@array/game_mode_arrays"
+        android:prompt="@string/game_mode_prompt"
         app:layout_constraintVertical_bias="0.15" />
+
 
     <EditText
         android:id="@+id/nicknameEditText"

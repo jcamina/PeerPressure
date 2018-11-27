@@ -28,13 +28,7 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
         lobbyPlayersJoinTextView = (TextView) findViewById(R.id.lobbyPlayersJoinTextView);
 
-        Intent retrieveCode = getIntent();
-        Bundle bundle = retrieveCode.getExtras();
-
-        if(bundle != null)
-        {
-            lobbyCode = (String) bundle.get("lobbyCode");
-        }
+        c
 
     }
 
@@ -65,13 +59,16 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
                     if (properties.getGameProgression().equals("Round 1")){
 
+                        lobbyCheckRef.removeEventListener(this);
+
                         Intent joinGameLobbyToRoundSplash = new Intent(JoinGameLobbyActivity.this,
                                 RoundSplashActivity.class);
 
                         joinGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
+
+
                         startActivity(joinGameLobbyToRoundSplash);
 
-                        finishAffinity();
                     }
                 }
 

@@ -41,7 +41,8 @@
         <activity android:name=".FLeaderboardSplash" />
         <activity android:name=".RulesActivity" />
         <activity android:name=".FPerformaceCompleteConfirmActivity" />
-        <activity android:name=".FLosersHoldActivity"></activity>
+        <activity android:name=".FLosersHoldActivity" />
+        <activity android:name=".RReadyVoteHostActivity"></activity>
     </application>
 
 </manifest>

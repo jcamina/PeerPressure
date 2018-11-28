@@ -12,6 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class RReadyVoteActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
@@ -35,6 +38,7 @@ public class RReadyVoteActivity extends AppCompatActivity {
         final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
+       // final ArrayList<Dare> remainingDares = new ArrayList();
 
         currentLobby.addValueEventListener(new ValueEventListener() {
             @Override
@@ -43,11 +47,15 @@ public class RReadyVoteActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
+
+
                      if (dataSnapshot.child("Players").getChildrenCount() == dataSnapshot.child("Dares").getChildrenCount())
                      {
+
                          Intent RReadVoteToRVoteActive = new Intent(RReadyVoteActivity.this,RVoteActiveActivity.class);
                          RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
                          startActivity(RReadVoteToRVoteActive);
+
                      }
                 }
             }

@@ -37,10 +37,10 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-        submitButton = (Button) findViewById(R.id.submitButton);
-        currentPlayerNameTextView = (TextView) findViewById(R.id.currentPlayerNameTextView);
-        enterDareEditText = (EditText) findViewById(R.id.enterDareEditText);
-        inRoundTimerTextView = (TextView)  findViewById(R.id.inRoundTimerTextView);
+        submitButton = findViewById(R.id.submitButton);
+        currentPlayerNameTextView = findViewById(R.id.currentPlayerNameTextView);
+        enterDareEditText = findViewById(R.id.enterDareEditText);
+        inRoundTimerTextView = findViewById(R.id.inRoundTimerTextView);
 
         submitButton.setOnClickListener(this);
 
@@ -104,11 +104,40 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
             String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
-                    .child(UID).setValue(new Dare(UID, dareSubmissionText,0));
+                    .child(UID).setValue(new Dare(UID, dareSubmissionText,0,"Unused"));
 
-            Intent REnterDareToRReadyVote = new Intent(REnterDareActivity.this,RReadyVoteActivity.class);
-            REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
-            startActivity(REnterDareToRReadyVote);
+            final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Games").child(lobbyCode).child("Players").child(UID);
+
+            hostCheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+
+                        Player currentPlayer = dataSnapshot.getValue(Player.class);
+
+                        if (currentPlayer.getIsHost()) {
+                            Intent REnterDareToRReadyVoteHost = new Intent(REnterDareActivity.this,RReadyVoteHostActivity.class);
+                            REnterDareToRReadyVoteHost.putExtra("lobbyCode", lobbyCode);
+                            startActivity(REnterDareToRReadyVoteHost);
+                        } else {
+
+                            Intent REnterDareToRReadyVote = new Intent(REnterDareActivity.this,RReadyVoteActivity.class);
+                            REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
+                            startActivity(REnterDareToRReadyVote);
+                        }
+                    }
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // ...
+                }
+            });
+
+
 
         }
     }

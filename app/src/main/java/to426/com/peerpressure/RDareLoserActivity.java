@@ -7,6 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 public class RDareLoserActivity extends AppCompatActivity {
 
     String lobbyCode = "";
@@ -29,6 +37,86 @@ public class RDareLoserActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
+
+        loserNamePlaceholderTextView = findViewById(R.id.loserNamePlaceholderTextView);
+        loserDarePlaceholderTextView = findViewById(R.id.loserDarePlaceholderTextView);
+
+        final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
+                .child("Games").child(lobbyCode);
+
+        currentLobby.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
+
+                    loserNamePlaceholderTextView.setText(currentPlayer.getNickname());
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+
+        //Sets the dare to text field
+        currentLobby.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    int voteOne = 0;
+                    String dareOneUID = "";
+
+                    int voteTwo = 0;
+                    String dareTwoUID = "";
+
+                    for (DataSnapshot data : dataSnapshot.child("Dares").getChildren()) {
+
+                        Dare currentDare = data.getValue(Dare.class);
+
+                        if (currentDare.getDareUsed().equals("selectOne")) {
+                            voteOne = currentDare.getVoteCount();
+                            dareOneUID = data.getKey();
+
+                        } else if (currentDare.getDareUsed().equals("selectTwo")) {
+                            voteTwo = currentDare.getVoteCount();
+                            dareTwoUID = data.getKey();
+
+                        }
+                    }
+
+                    if (voteOne > voteTwo) {
+
+                        Dare winningDare = dataSnapshot.child("Dares").child(dareOneUID).getValue(Dare.class);
+
+                        loserDarePlaceholderTextView.setText(winningDare.getDareMessage());
+
+                    } else if (voteTwo > voteOne) {
+
+                        Dare winningDare = dataSnapshot.child("Dares").child(dareTwoUID).getValue(Dare.class);
+
+                        loserDarePlaceholderTextView.setText(winningDare.getDareMessage());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
 
     }
 }

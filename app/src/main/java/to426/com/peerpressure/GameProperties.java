@@ -5,15 +5,17 @@ public class GameProperties {
     private String gameProgression = "";
     private String gameType = "";
     private boolean dareRoundRandomized;
+    private String currentWinner = "";
 
     public GameProperties(){
 
     }
 
-    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized){
+    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized, String inCurrentWinner){
         gameProgression = inGameProgression;
         gameType = inGameType;
         dareRoundRandomized = inDareRoundRandomized;
+        currentWinner = inCurrentWinner;
     }
 
     public void setGameProgression(String inGameProgression) {
@@ -34,5 +36,13 @@ public class GameProperties {
 
     public String getGameType() {
         return gameType;
+    }
+
+    public void setCurrentWinner(String inCurrentWinner) {
+        currentWinner = inCurrentWinner;
+    }
+
+    public String getCurrentWinner(){
+        return currentWinner;
     }
 }

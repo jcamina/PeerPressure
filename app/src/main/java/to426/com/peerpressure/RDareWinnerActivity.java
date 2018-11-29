@@ -47,7 +47,7 @@ public class RDareWinnerActivity extends AppCompatActivity {
         final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
-        currentLobby.addValueEventListener(new ValueEventListener() {
+        currentLobby.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -72,6 +72,7 @@ public class RDareWinnerActivity extends AppCompatActivity {
                 // ...
             }
         });
+
 
 
 

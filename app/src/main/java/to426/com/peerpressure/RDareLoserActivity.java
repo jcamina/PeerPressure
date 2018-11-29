@@ -5,10 +5,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class RDareLoserActivity extends AppCompatActivity {
 
     String lobbyCode = "";
+
+    public TextView loserNamePlaceholderTextView;
+    public TextView loserDarePlaceholderTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,32 +10,28 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class RVoteWaitActivity extends AppCompatActivity {
+public class RPostVoteHold extends AppCompatActivity {
 
     String lobbyCode = "";
+    String dareOneUID = "";
+    String dareTwoUID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rvote_wait);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
+        setContentView(R.layout.activity_rpost_vote_hold);
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
 
         if (bundle != null) {
             lobbyCode = (String) bundle.get("lobbyCode");
+            dareOneUID = (String) bundle.get("dareOneUID");
+            dareTwoUID = (String) bundle.get("dareTwoUID");
         }
-
-    }
-
-    //Disable Back Button
-    @Override
-    public void onBackPressed() {
     }
 
     @Override
@@ -84,47 +78,47 @@ public class RVoteWaitActivity extends AppCompatActivity {
                         String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-                        Toast.makeText(RVoteWaitActivity.this, "Everybody Has Voted!",
+                        Toast.makeText(RPostVoteHold.this, "Everybody Has Voted!",
                                 Toast.LENGTH_LONG).show();
 
                         if (voteOne > voteTwo) {
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 1 Won " + dareOneUID,
+                            Toast.makeText(RPostVoteHold.this, "Dare 1 Won " + dareOneUID,
                                     Toast.LENGTH_LONG).show();
 
-                            if (dareOneUID.equals(currentUID)){
-                                Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
-                                RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
-                                startActivity(RPostVoteToRDareWinner);
-                            } else if (dareTwoUID.equals(currentUID)){
-                                Intent RPostVoteToRDareLoser = new Intent(RVoteWaitActivity.this,RDareLoserActivity.class);
-                                RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
-                                startActivity(RPostVoteToRDareLoser);
-                            } else {
-                                Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RVoteWaitActivity.this,RVoteActiveWinnerSplash.class);
-                                RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
-                                startActivity(RPostVoteToRVoteActiveWinnerSplash);
-                            }
+                        if (dareOneUID.equals(currentUID)){
+                            Intent RPostVoteToRDareWinner = new Intent(RPostVoteHold.this,RDareWinnerActivity.class);
+                            RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RPostVoteToRDareWinner);
+                        } else if (dareTwoUID.equals(currentUID)){
+                            Intent RPostVoteToRDareLoser = new Intent(RPostVoteHold.this,RDareLoserActivity.class);
+                            RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RPostVoteToRDareLoser);
+                        } else {
+                            Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RPostVoteHold.this,RVoteActiveWinnerSplash.class);
+                            RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RPostVoteToRVoteActiveWinnerSplash);
+                        }
 
 
 
                         } else if (voteTwo > voteOne){
 
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 2 Won " + dareTwoUID,
+                            Toast.makeText(RPostVoteHold.this, "Dare 2 Won " + dareTwoUID,
                                     Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 1 Won " + dareOneUID,
+                            Toast.makeText(RPostVoteHold.this, "Dare 1 Won " + dareOneUID,
                                     Toast.LENGTH_LONG).show();
 
                             if (dareTwoUID.equals(currentUID)){
-                                Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
+                                Intent RPostVoteToRDareWinner = new Intent(RPostVoteHold.this,RDareWinnerActivity.class);
                                 RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareWinner);
                             } else if (dareOneUID.equals(currentUID)){
-                                Intent RPostVoteToRDareLoser = new Intent(RVoteWaitActivity.this,RDareLoserActivity.class);
+                                Intent RPostVoteToRDareLoser = new Intent(RPostVoteHold.this,RDareLoserActivity.class);
                                 RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareLoser);
                             } else {
-                                Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RVoteWaitActivity.this,RVoteActiveWinnerSplash.class);
+                                Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RPostVoteHold.this,RVoteActiveWinnerSplash.class);
                                 RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRVoteActiveWinnerSplash);
                             }
@@ -132,7 +126,7 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                         } else if (voteOne == voteTwo){
 
-                            Toast.makeText(RVoteWaitActivity.this, "Dare Tie!",
+                            Toast.makeText(RPostVoteHold.this, "Dare Tie!",
                                     Toast.LENGTH_LONG).show();
 
                         }
@@ -155,4 +149,7 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }

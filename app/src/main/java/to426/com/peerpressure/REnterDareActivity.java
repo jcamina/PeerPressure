@@ -29,6 +29,8 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
     public String lobbyCode = "";
 
+    public boolean dareSubmitted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +56,9 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         new CountDownTimer(90000, 1000) {
             public void onFinish() {
 
-                submitDare();
-
+                if (!dareSubmitted) {
+                    submitDare();
+                }
                 finish();
             }
 
@@ -115,17 +118,27 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
                     if (dataSnapshot.exists()) {
 
+                        submitButton.setEnabled(false);
+
                         Player currentPlayer = dataSnapshot.getValue(Player.class);
 
                         if (currentPlayer.getIsHost()) {
                             Intent REnterDareToRReadyVoteHost = new Intent(REnterDareActivity.this,RReadyVoteHostActivity.class);
                             REnterDareToRReadyVoteHost.putExtra("lobbyCode", lobbyCode);
                             startActivity(REnterDareToRReadyVoteHost);
+                            hostCheckRef.removeEventListener(this); // stops from assigning every single one as selected
+
+                            finish();
+
                         } else {
 
                             Intent REnterDareToRReadyVote = new Intent(REnterDareActivity.this,RReadyVoteActivity.class);
                             REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
                             startActivity(REnterDareToRReadyVote);
+                            hostCheckRef.removeEventListener(this); // stops from assigning every single one as selected
+
+                            finish();
+
                         }
                     }
                 }
@@ -142,12 +155,18 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
 
     @Override
     public void onClick(View v) {
 
 
         if (v == submitButton) {
+            dareSubmitted = true;
             submitDare();
         }
 

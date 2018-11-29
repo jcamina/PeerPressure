@@ -47,17 +47,30 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
 
         if (v == newGameButton){
 
+            newGameButton.setEnabled(false);
+            joinGameButton.setEnabled(false);
+
             startActivity(joinCreateToCreateNewGame);
+            finish();
 
         }
         else if (v == joinGameButton){
 
+            newGameButton.setEnabled(false);
+            joinGameButton.setEnabled(false);
+
             startActivity(joinCreateToJoinGame);
+            finish();
+
 
         }
         else if (v == rulesButton){
+            newGameButton.setEnabled(false);
+            joinGameButton.setEnabled(false);
 
             startActivity(joinCreateToRules);
+            finish();
+
 
         }
 

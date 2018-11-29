@@ -94,6 +94,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Account Successfully Created",
                                     Toast.LENGTH_SHORT).show();
 
+                            registerButton.setEnabled(false);
+
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -126,9 +128,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Login Successful",
                                     Toast.LENGTH_SHORT).show();
 
+                            loginButton.setEnabled(false);
+
                             Intent loginToJoinCreate = new Intent(LoginActivity.this, JoinCreateGameActivity.class);
 
                             LoginActivity.this.startActivity(loginToJoinCreate);
+                            finish();
                         } else {
                             Log.w("hi", "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(),
@@ -172,7 +177,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Toast.LENGTH_SHORT).show();
             } else {
                 registerUser(email, password);
+
             }
+
 
         } else if (v == loginButton) {
 
@@ -183,11 +190,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 userNameEditText.setText("");
                 passwordEditText.setText("");
 
+
                 Toast.makeText(LoginActivity.this, "Login / Password Left Blank!",
                         Toast.LENGTH_SHORT).show();
             } else {
                 signIn(email, password);
             }
+
+
         }
     }
 }

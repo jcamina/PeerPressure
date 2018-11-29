@@ -38,6 +38,11 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
     }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -71,9 +76,9 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
                                 RoundSplashActivity.class);
 
                         joinGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
-
-
                         startActivity(joinGameLobbyToRoundSplash);
+                        finish();
+
 
                     }
                 }

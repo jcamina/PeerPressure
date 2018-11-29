@@ -42,7 +42,9 @@
         <activity android:name=".RulesActivity" />
         <activity android:name=".FPerformaceCompleteConfirmActivity" />
         <activity android:name=".FLosersHoldActivity" />
-        <activity android:name=".RReadyVoteHostActivity"></activity>
+        <activity android:name=".RReadyVoteHostActivity" />
+        <activity android:name=".AfterVoteHoldActivity" />
+        <activity android:name=".RPostVoteHold"></activity>
     </application>
 
 </manifest>

@@ -50,6 +50,11 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
     }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -93,6 +98,8 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
         if (v == startGameButton) {
 
+            startGameButton.setEnabled(false);
+
             final DatabaseReference lobbyRef = FirebaseDatabase.getInstance().getReference()
                     .child("Games").child(lobbyCode).child("Properties");
 
@@ -115,8 +122,9 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
                                 newGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(newGameLobbyToRoundSplash);
+                                finish();
 
-                        }
+                            }
                     }
                 }
 

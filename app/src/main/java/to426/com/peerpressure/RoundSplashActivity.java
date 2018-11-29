@@ -48,7 +48,6 @@ public class RoundSplashActivity extends AppCompatActivity {
 
                 roundSplashToEnterDare.putExtra("lobbyCode", lobbyCode);
                 startActivity(roundSplashToEnterDare);
-
                 finish();
             }
 
@@ -72,6 +71,8 @@ public class RoundSplashActivity extends AppCompatActivity {
                     if (properties.getGameProgression().equals("Round 1")) {
 
                         roundTextView.setText("Round 1");
+                        lobbyCheckRef.removeEventListener(this); // stops from assigning every single one as selected
+
                     }
                 }
             }
@@ -83,6 +84,11 @@ public class RoundSplashActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
     }
 
 

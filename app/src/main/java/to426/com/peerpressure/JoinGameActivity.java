@@ -62,7 +62,9 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
         if (v == enterButton){
 
-           joinGame();
+            enterButton.setEnabled(false);
+
+            joinGame();
 
 
 
@@ -88,6 +90,9 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
             nicknameEditText.setText("");
             lobbyCodeEditText.setText("");
 
+            enterButton.setEnabled(true);
+
+
         } else {
 
             final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
@@ -109,10 +114,15 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
                             Intent joinGameToJoinGameLobby = new Intent(JoinGameActivity.this, JoinGameLobbyActivity.class);
                             joinGameToJoinGameLobby.putExtra("lobbyCode", LOBBYCODE);
                             startActivity(joinGameToJoinGameLobby);
+                            finish();
+
 
                         } else {
                             Toast.makeText(JoinGameActivity.this, "ERROR: Somebody is Already Logged-in With This Account!",
                                     Toast.LENGTH_SHORT).show();
+
+                            enterButton.setEnabled(true);
+
 
                         }
 
@@ -125,6 +135,9 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
                         nicknameEditText.setText("");
                         lobbyCodeEditText.setText("");
+
+                        enterButton.setEnabled(true);
+
 
                     }
                 }

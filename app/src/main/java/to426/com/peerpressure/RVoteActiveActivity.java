@@ -44,8 +44,8 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
         dareOneButton.setOnClickListener(this);
         dareTwoButton.setOnClickListener(this);
 
-        setDareButton("Selected1");
-        setDareButton("Selected2");
+        setDareButton("selectOne");
+        setDareButton("selectTwo");
 
     }
 
@@ -54,7 +54,7 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
         final Query selectedDares = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode).child("Dares").orderByChild("dareUsed").equalTo(inDareNum);
 
-        selectedDares.addValueEventListener(new ValueEventListener() {
+        selectedDares.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -67,18 +67,20 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
                         try {
 
-                            if (currentDare.getDareUsed().equals("Selected1")){
+                            if (currentDare.getDareUsed().equals("selectOne")){
                                 dareOneButton.setText(currentDare.getDareMessage());
+                                selectedDares.removeEventListener(this); // stops from assigning every single one as selected
 
-                            }   else if (currentDare.getDareUsed().equals("Selected2")){
+
+                            }   else if (currentDare.getDareUsed().equals("selectTwo")){
                                 dareTwoButton.setText(currentDare.getDareMessage());
+                                selectedDares.removeEventListener(this); // stops from assigning every single one as selected
                             }
 
                         } catch (Exception e) {
                             Toast.makeText(RVoteActiveActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
-
                     }
                     }
 
@@ -104,7 +106,7 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        //If Borrow Byy Value Matches, Add to Array List "Books"
+
                         Dare currentDare = data.getValue(Dare.class);
 
                         try {
@@ -136,12 +138,34 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
         if (v == dareOneButton) {
 
-            incrementDareVote("Selected1");
+            incrementDareVote("selectOne");
+
+
+
+            Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
+            RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
+            startActivity(RVoteActiveToRAfterVoteHold);
+            finish();
+
 
         } else if (v == dareTwoButton) {
-            incrementDareVote("Selected2");
+
+            incrementDareVote("selectTwo");
+
+
+
+            Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
+            RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
+            startActivity(RVoteActiveToRAfterVoteHold);
+            finish();
+
 
         }
 
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
     }
 }

@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,29 +37,51 @@ public class RReadyVoteActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
-
-       // final ArrayList<Dare> remainingDares = new ArrayList();
 
         currentLobby.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                 if (dataSnapshot.exists()) {
 
+                    GameProperties currentProperties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
+                    if (currentProperties.getDareRoundRandomized())
+                    {
+                        final String UIDPLAYER = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                     if (dataSnapshot.child("Players").getChildrenCount() == dataSnapshot.child("Dares").getChildrenCount())
-                     {
+                        Dare playerDare = dataSnapshot.child("Dares").child(UIDPLAYER).getValue(Dare.class);
 
-                         Intent RReadVoteToRVoteActive = new Intent(RReadyVoteActivity.this,RVoteActiveActivity.class);
-                         RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
-                         startActivity(RReadVoteToRVoteActive);
+                        Toast.makeText(RReadyVoteActivity.this,playerDare.getDareUsed() , Toast.LENGTH_LONG).show();
 
-                     }
+                        if (playerDare.getDareUsed().equals("selectOne") || playerDare.getDareUsed().equals("selectTwo")) {
+
+                            Intent RReadVoteToRVoteWait = new Intent(RReadyVoteActivity.this, RVoteWaitActivity.class);
+                            RReadVoteToRVoteWait.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RReadVoteToRVoteWait);
+
+                        } else {
+
+                            Intent RReadVoteToRVoteActive = new Intent(RReadyVoteActivity.this,RVoteActiveActivity.class);
+                            RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RReadVoteToRVoteActive);
+
+                        }
+
+                       currentLobby.removeEventListener(this);
+
+                        finish();
+
+                    }
+
                 }
             }
 
@@ -66,6 +91,11 @@ public class RReadyVoteActivity extends AppCompatActivity {
                 // ...
             }
         });
+    }
 
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
     }
 }

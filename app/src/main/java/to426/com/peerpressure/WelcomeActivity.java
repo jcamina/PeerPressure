@@ -42,7 +42,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v == beginButton)
         {
+            beginButton.setEnabled(false);
             startActivity(welcomeToLogin);
+            finish();
         }
 
     }

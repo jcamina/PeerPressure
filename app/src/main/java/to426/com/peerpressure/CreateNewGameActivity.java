@@ -71,7 +71,10 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
             if (!(lobbyCode.equals("Error"))) {
                 //Send the Game Code To The Next Screen
                 createNewGameToNewGameLobby.putExtra("lobbyCode", lobbyCode);
+                enterButton.setEnabled(false);
                 startActivity(createNewGameToNewGameLobby);
+                finish();
+
             }
         }
     }
@@ -96,7 +99,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
                         setValue(new Player(UIDHOST, NICKNAME, SCORE, ISHOST));
 
                 gameRef.child("Games").child(LOBBYCODE).child("Properties").
-                        setValue(new GameProperties("Lobby","Default"));
+                        setValue(new GameProperties("Lobby","Default",false));
 
                 Toast.makeText(this, "Lobby Successfully Created!", Toast.LENGTH_SHORT).show();
 

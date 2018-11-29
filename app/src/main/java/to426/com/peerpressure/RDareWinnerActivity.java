@@ -4,6 +4,7 @@ package to426.com.peerpressure;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -72,6 +73,22 @@ public class RDareWinnerActivity extends AppCompatActivity {
                 // ...
             }
         });
+
+        new CountDownTimer(11000, 1000) {
+            public void onFinish() {
+
+                Intent RDareWinnerSplashToRVotePerformance = new Intent(RDareWinnerActivity.this,RVotePerformanceActivity.class);
+                RDareWinnerSplashToRVotePerformance.putExtra("lobbyCode", lobbyCode);
+                startActivity(RDareWinnerSplashToRVotePerformance);
+                finish();
+
+            }
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+        }.start();
 
 
 

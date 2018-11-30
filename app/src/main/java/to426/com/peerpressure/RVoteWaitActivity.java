@@ -95,14 +95,26 @@ public class RVoteWaitActivity extends AppCompatActivity {
                                 Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
                                 RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareWinner);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else if (dareTwoUID.equals(currentUID)){
                                 Intent RPostVoteToRDareLoser = new Intent(RVoteWaitActivity.this,RDareLoserActivity.class);
                                 RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareLoser);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else {
                                 Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RVoteWaitActivity.this,RVoteActiveWinnerSplash.class);
                                 RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRVoteActiveWinnerSplash);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             }
 
 
@@ -119,14 +131,26 @@ public class RVoteWaitActivity extends AppCompatActivity {
                                 Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
                                 RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareWinner);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else if (dareOneUID.equals(currentUID)){
                                 Intent RPostVoteToRDareLoser = new Intent(RVoteWaitActivity.this,RDareLoserActivity.class);
                                 RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareLoser);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else {
                                 Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RVoteWaitActivity.this,RVoteActiveWinnerSplash.class);
                                 RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRVoteActiveWinnerSplash);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             }
 
 
@@ -137,10 +161,6 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                         }
                     }
-
-
-
-
 
                 }
 

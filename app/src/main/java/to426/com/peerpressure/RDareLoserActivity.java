@@ -56,6 +56,12 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                     loserNamePlaceholderTextView.setText(currentPlayer.getNickname());
 
+                    currentPlayer.setScore(currentPlayer.getScore() - 500);
+
+                    currentLobby.child("Players").child(UIDCLIENT).setValue(currentPlayer);
+
+                    currentLobby.removeEventListener(this);
+
 
                 }
 

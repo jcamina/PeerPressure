@@ -60,9 +60,15 @@ public class RDareWinnerActivity extends AppCompatActivity {
 
                     namePlaceholderTextView.setText(currentPlayer.getNickname());
 
+                    currentPlayer.setScore(currentPlayer.getScore() + 500);
+
+                    currentLobby.child("Players").child(UIDCLIENT).setValue(currentPlayer);
+
                     Dare winningDare = dataSnapshot.child("Dares").child(UIDCLIENT).getValue(Dare.class);
 
                     darePlaceholderTextView.setText(winningDare.getDareMessage());
+
+                    currentLobby.removeEventListener(this);
 
                 }
 

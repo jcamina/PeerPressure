@@ -44,7 +44,8 @@
         <activity android:name=".FLosersHoldActivity" />
         <activity android:name=".RReadyVoteHostActivity" />
         <activity android:name=".AfterVoteHoldActivity" />
-        <activity android:name=".RPostVoteHold"></activity>
+        <activity android:name=".RPostVoteHold" />
+        <activity android:name=".RPostPerformaceActivity"></activity>
     </application>
 
 </manifest>

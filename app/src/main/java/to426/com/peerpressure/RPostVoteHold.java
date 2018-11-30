@@ -1,6 +1,8 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -23,6 +25,9 @@ public class RPostVoteHold extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpost_vote_hold);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.pplogo);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -89,14 +94,26 @@ public class RPostVoteHold extends AppCompatActivity {
                             Intent RPostVoteToRDareWinner = new Intent(RPostVoteHold.this,RDareWinnerActivity.class);
                             RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
                             startActivity(RPostVoteToRDareWinner);
+                            finish();
+
+                            currentLobby.removeEventListener(this);
+                            finish();
+
                         } else if (dareTwoUID.equals(currentUID)){
                             Intent RPostVoteToRDareLoser = new Intent(RPostVoteHold.this,RDareLoserActivity.class);
                             RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
                             startActivity(RPostVoteToRDareLoser);
+
+                            currentLobby.removeEventListener(this);
+                            finish();
+
                         } else {
                             Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RPostVoteHold.this,RVoteActiveWinnerSplash.class);
                             RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
                             startActivity(RPostVoteToRVoteActiveWinnerSplash);
+
+                            currentLobby.removeEventListener(this);
+                            finish();
                         }
 
 
@@ -113,16 +130,27 @@ public class RPostVoteHold extends AppCompatActivity {
                                 Intent RPostVoteToRDareWinner = new Intent(RPostVoteHold.this,RDareWinnerActivity.class);
                                 RPostVoteToRDareWinner.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareWinner);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else if (dareOneUID.equals(currentUID)){
                                 Intent RPostVoteToRDareLoser = new Intent(RPostVoteHold.this,RDareLoserActivity.class);
                                 RPostVoteToRDareLoser.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRDareLoser);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
                             } else {
                                 Intent RPostVoteToRVoteActiveWinnerSplash = new Intent(RPostVoteHold.this,RVoteActiveWinnerSplash.class);
                                 RPostVoteToRVoteActiveWinnerSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RPostVoteToRVoteActiveWinnerSplash);
-                            }
 
+                                currentLobby.removeEventListener(this);
+                                finish();
+
+                            }
 
                         } else if (voteOne == voteTwo){
 
@@ -131,10 +159,6 @@ public class RPostVoteHold extends AppCompatActivity {
 
                         }
                     }
-
-
-
-
 
                 }
 

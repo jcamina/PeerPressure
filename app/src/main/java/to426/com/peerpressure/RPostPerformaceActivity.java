@@ -50,7 +50,6 @@ public class RPostPerformaceActivity extends AppCompatActivity {
 
                         Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
 
-
                         if(currentPlayer.getIsHost()){
 
                             Intent RDareLoserToRHostEndPartRound = new Intent(RPostPerformaceActivity.this,RHostEndPartRoundActivity.class);

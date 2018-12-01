@@ -79,8 +79,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                             properties.setNumVoted(0);
 
-
-
                             currentLobby.child("Properties").setValue(properties);
 
                             randomizeRemainingRoundDares();
@@ -104,26 +102,25 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                                 currentLobby.removeEventListener(this);
 
                                 finish();
+                            } else if (properties.getGameProgression().equals("Round 2")) {
+
+                                properties.setGameProgression("Final Round");
+                                properties.setNumVoted(0);
+                                properties.setRoundTwoComplete(true);
+
+                                currentLobby.child("Properties").setValue(properties);
+                                currentLobby.child("Dares").setValue("");
+
+                                Intent RHostEndPartRoundAToFFinalDareLoadingHost = new Intent(RHostEndPartRoundActivity.this, FFinalDareLoadingHostActivity.class);
+                                RHostEndPartRoundAToFFinalDareLoadingHost.putExtra("lobbyCode", lobbyCode);
+                                startActivity(RHostEndPartRoundAToFFinalDareLoadingHost);
+
+                                currentLobby.removeEventListener(this);
+
+                                finish();
+
+
                             }
-
-                        }  else if (properties.getGameProgression().equals("Round 2")){
-
-                            properties.setGameProgression("Final Round");
-                            properties.setNumVoted(0);
-                            properties.setRoundTwoComplete(true);
-
-                            currentLobby.child("Properties").setValue(properties);
-                            currentLobby.child("Dares").setValue("");
-
-                            Intent RHostEndPartRoundAToFFinalDareLoadingHost = new Intent(RHostEndPartRoundActivity.this, FFinalDareLoadingHostActivity.class);
-                            RHostEndPartRoundAToFFinalDareLoadingHost.putExtra("lobbyCode", lobbyCode);
-                            startActivity(RHostEndPartRoundAToFFinalDareLoadingHost);
-
-                            currentLobby.removeEventListener(this);
-
-                            finish();
-
-
                         }
 
 

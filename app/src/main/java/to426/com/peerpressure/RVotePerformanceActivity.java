@@ -196,7 +196,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
                         playerLost.setScore(playerLost.getScore() + inScore);
 
-                        currentLobby.child("Players").child(dareTwoUID).setValue(playerLost);
+                        currentLobby.child("Players").child(dareOneUID).setValue(playerLost);
 
                         GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 

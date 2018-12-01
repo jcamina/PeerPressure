@@ -60,8 +60,9 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                     currentLobby.child("Players").child(UIDCLIENT).setValue(currentPlayer);
 
-                    currentLobby.removeEventListener(this);
+                    GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
+                    currentLobby.removeEventListener(this);
 
                 }
 
@@ -116,6 +117,54 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+
+        currentLobby.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+
+                    if (properties.getNumVoted() == (dataSnapshot.child("Players").getChildrenCount() - 1) ) {
+
+                        final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                        Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
+
+
+                        if(currentPlayer.getIsHost()){
+
+                            Intent RDareLoserToRHostEndPartRound = new Intent(RDareLoserActivity.this,RHostEndPartRoundActivity.class);
+                            RDareLoserToRHostEndPartRound.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RDareLoserToRHostEndPartRound);
+
+                            currentLobby.removeEventListener(this); // stops from assigning
+                            finish();
+
+                        } else {
+                            Intent RDareLoserToREndPartRound = new Intent(RDareLoserActivity.this,REndPartRoundActivity.class);
+                            RDareLoserToREndPartRound.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RDareLoserToREndPartRound);
+                            currentLobby.removeEventListener(this); // stops from assigning
+                            finish();
+
+                        }
+
+                        currentLobby.removeEventListener(this);
+                    }
+
+                }
+
             }
 
             @Override

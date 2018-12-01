@@ -68,12 +68,20 @@ public class RoundSplashActivity extends AppCompatActivity {
 
                     GameProperties properties = dataSnapshot.getValue(GameProperties.class);
 
-                    if (properties.getGameProgression().equals("Round 1")) {
+                    String roundTitle = "";
 
-                        roundTextView.setText("Round 1");
-                        lobbyCheckRef.removeEventListener(this); // stops from assigning every single one as selected
+                    if (!properties.getRoundOneComplete()) {
+                        roundTitle = "Round 1";
+                    } else if (properties.getRoundOneComplete()){
+                        roundTitle = "Round 2";
 
                     }
+
+                    roundTextView.setText(roundTitle);
+
+                    lobbyCheckRef.removeEventListener(this); // stops from assigning every single one as selected
+
+
                 }
             }
 

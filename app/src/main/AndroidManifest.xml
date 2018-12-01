@@ -45,7 +45,11 @@
         <activity android:name=".RReadyVoteHostActivity" />
         <activity android:name=".AfterVoteHoldActivity" />
         <activity android:name=".RPostVoteHold" />
-        <activity android:name=".RPostPerformaceActivity"></activity>
+        <activity android:name=".RPostPerformaceActivity" />
+        <activity android:name=".REndPartRoundActivity" />
+        <activity android:name=".RHostEndPartRoundActivity" />
+        <activity android:name=".FFinalDareLoadingHostActivity" />
+        <activity android:name=".FFinalDareLoadingActivity"></activity>
     </application>
 
 </manifest>

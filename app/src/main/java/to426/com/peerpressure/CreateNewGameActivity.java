@@ -99,7 +99,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
                         setValue(new Player(UIDHOST, NICKNAME, SCORE, ISHOST));
 
                 gameRef.child("Games").child(LOBBYCODE).child("Properties").
-                        setValue(new GameProperties("Lobby","Default",false,"none"));
+                        setValue(new GameProperties("Lobby","Default",false,0,false,false));
 
                 Toast.makeText(this, "Lobby Successfully Created!", Toast.LENGTH_SHORT).show();
 

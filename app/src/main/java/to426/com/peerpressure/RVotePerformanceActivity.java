@@ -67,6 +67,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
             greatButton.setEnabled(false);
             amazingButton.setEnabled(false);
 
+
             Intent RVotePerformanceToRPostPerformance =
                     new Intent(RVotePerformanceActivity.this,RPostPerformaceActivity.class);
             RVotePerformanceToRPostPerformance.putExtra("lobbyCode", lobbyCode);
@@ -182,6 +183,12 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
                         currentLobby.child("Players").child(dareTwoUID).setValue(playerLost);
 
+                        GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+                        properties.setNumVoted(properties.getNumVoted() + 1);
+
+                        currentLobby.child("Properties").setValue(properties);
+
 
                     } else if (voteTwo > voteOne) {
 
@@ -191,6 +198,11 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
                         currentLobby.child("Players").child(dareTwoUID).setValue(playerLost);
 
+                        GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+                        properties.setNumVoted(properties.getNumVoted() + 1);
+
+                        currentLobby.child("Properties").setValue(properties);
 
 
                     }

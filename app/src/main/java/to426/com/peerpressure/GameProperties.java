@@ -5,17 +5,22 @@ public class GameProperties {
     private String gameProgression = "";
     private String gameType = "";
     private boolean dareRoundRandomized;
-    private String currentWinner = "";
+    private boolean roundOneComplete;
+    private boolean roundTwoComplete;
+
+    private int numVoted = 0;
 
     public GameProperties(){
 
     }
 
-    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized, String inCurrentWinner){
+    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized, int inNumVoted, boolean inRoundOneComplete, boolean inRoundTwoComplete){
         gameProgression = inGameProgression;
         gameType = inGameType;
         dareRoundRandomized = inDareRoundRandomized;
-        currentWinner = inCurrentWinner;
+        numVoted = inNumVoted;
+        roundOneComplete = inRoundOneComplete;
+        roundTwoComplete = inRoundTwoComplete;
     }
 
     public void setGameProgression(String inGameProgression) {
@@ -38,11 +43,27 @@ public class GameProperties {
         return gameType;
     }
 
-    public void setCurrentWinner(String inCurrentWinner) {
-        currentWinner = inCurrentWinner;
+    public void setNumVoted(int inNumVoted) {
+        numVoted = inNumVoted;
     }
 
-    public String getCurrentWinner(){
-        return currentWinner;
+    public int getNumVoted(){
+        return numVoted;
+    }
+
+    public boolean getRoundOneComplete() {
+        return roundOneComplete;
+    }
+
+    public void setRoundOneComplete(boolean inRoundOneComplete) {
+        roundOneComplete = inRoundOneComplete;
+    }
+
+    public boolean getRoundTwoComplete() {
+        return roundTwoComplete;
+    }
+
+    public void setRoundTwoComplete(boolean inRoundTwoComplete) {
+        roundTwoComplete = inRoundTwoComplete;
     }
 }

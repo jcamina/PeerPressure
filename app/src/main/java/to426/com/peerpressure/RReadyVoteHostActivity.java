@@ -93,6 +93,10 @@ public class RReadyVoteHostActivity extends AppCompatActivity {
 
                             currentProperties.setDareRoundRandomized(true);
 
+                            if (currentProperties.getGameProgression().equals("Round 1") && currentProperties.getRoundOneComplete()) {
+                                currentProperties.setGameProgression("Round 2");
+                            }
+
                             lobbyHoldRef.child("Properties").setValue(currentProperties);
 
                             lobbyHoldRef.removeEventListener(this); // stops from assigning every single one as selected

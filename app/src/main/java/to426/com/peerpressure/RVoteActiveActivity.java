@@ -140,6 +140,9 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
             incrementDareVote("selectOne");
 
+            dareTwoButton.setEnabled(false);
+            dareOneButton.setEnabled(false);
+
 
 
             Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
@@ -152,6 +155,8 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
             incrementDareVote("selectTwo");
 
+            dareTwoButton.setEnabled(false);
+            dareOneButton.setEnabled(false);
 
 
             Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);

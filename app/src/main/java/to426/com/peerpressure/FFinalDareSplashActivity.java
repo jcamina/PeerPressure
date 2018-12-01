@@ -27,7 +27,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
 
-    Intent FFinalDareSplashToFFinalVoteActivity = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
+//    Intent FFinalDareSplashToFFinalVoteActivity = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,6 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                         String loser1UID = "";
                         String loser2UID = "";
 
-
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                             Player currentPlayer = data.getValue(Player.class);
@@ -73,11 +72,11 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                             playerScores.add(currentPlayer.getScore());
                         }
 
-                        Collections.sort(playerScores, Collections.reverseOrder());
+                        Collections.sort(playerScores);
 
                         finalDareParticipantOneTextView.setText(Integer.toString(playerScores.get(0)));
 
-                        /*
+
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                             Player currentPlayer = data.getValue(Player.class);
@@ -88,7 +87,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                                 loser1UID = data.getKey();
 
                             } else if (currentPlayer.getScore() == playerScores.get(1)) {
-                                finalDareParticipantOneTextView.setText(currentPlayer.getNickname());
+                                finalDareParticipantTwoTextView.setText(currentPlayer.getNickname());
                                 // FFinalDareSplashToFFinalVoteActivity.putExtra("Loser2", data.getKey());
                                 loser2UID = data.getKey();
 
@@ -124,7 +123,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                         }.start();
 
-                        */
+
 
                     }
                 }catch (Exception e){

@@ -8,6 +8,9 @@ public class GameProperties {
     private boolean roundOneComplete;
     private boolean roundTwoComplete;
 
+    private String finalDareLoserOne = "";
+    private String finalDareLoserTwo = "";
+
     private int numVoted = 0;
 
     public GameProperties(){
@@ -21,6 +24,18 @@ public class GameProperties {
         numVoted = inNumVoted;
         roundOneComplete = inRoundOneComplete;
         roundTwoComplete = inRoundTwoComplete;
+    }
+
+    //Final Dare Properties
+    public GameProperties(String inGameProgression, String inGameType, int inNumVoted, boolean inRoundOneComplete, boolean inRoundTwoComplete, String inFinalDareLoserOne, String inFinalDareLoserTwo){
+        gameProgression = inGameProgression;
+        gameType = inGameType;
+        numVoted = inNumVoted;
+        roundOneComplete = inRoundOneComplete;
+        roundTwoComplete = inRoundTwoComplete;
+        finalDareLoserOne = inFinalDareLoserOne;
+        finalDareLoserTwo = inFinalDareLoserTwo;
+
     }
 
     public void setGameProgression(String inGameProgression) {
@@ -66,4 +81,14 @@ public class GameProperties {
     public void setRoundTwoComplete(boolean inRoundTwoComplete) {
         roundTwoComplete = inRoundTwoComplete;
     }
+
+    public String getFinalDareLoserOne() {
+        return finalDareLoserOne;
+    }
+
+    public String getFinalDareLoserTwo() {
+        return finalDareLoserTwo;
+    }
+
+
 }

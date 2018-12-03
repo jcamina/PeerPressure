@@ -6,6 +6,7 @@ public class Dare {
     private String dareMessage;
     private int voteCount;
     private String dareUsed;
+    public int voteCountExtra;
 
 
     public Dare () {
@@ -17,6 +18,14 @@ public class Dare {
         dareMessage = inDareMessage;
         voteCount = inVoteCount;
         dareUsed = inDareUsed;
+    }
+
+    public Dare (String inUIDAssociated, String inDareMessage, int inVoteCount, String inDareUsed, int inVoteCountExtra){
+        UIDAssociated = inUIDAssociated;
+        dareMessage = inDareMessage;
+        voteCount = inVoteCount;
+        dareUsed = inDareUsed;
+        voteCountExtra = inVoteCountExtra;
     }
 
     public String getUIDAssociated() {
@@ -41,5 +50,13 @@ public class Dare {
 
     public String getDareUsed(){
         return dareUsed;
+    }
+
+    public int getVoteCountExtra() {
+        return voteCountExtra;
+    }
+
+    public void setVoteCountExtra(int inVoteCountExtra) {
+        voteCountExtra = inVoteCountExtra;
     }
 }

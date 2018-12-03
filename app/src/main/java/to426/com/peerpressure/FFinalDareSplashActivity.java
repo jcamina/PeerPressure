@@ -23,9 +23,13 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
     public TextView finalDareParticipantOneTextView;
     public TextView finalDareParticipantTwoTextView;
-    public TextView debugView;
 
     public String lobbyCode = "";
+
+    Intent FFinalDareLoadingToFLoserseHold = new Intent(FFinalDareSplashActivity.this, FDarePerformanceActivity.class);
+    Intent FFinalDareLoadingToFLobbDareHold = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
+
+
 
 //    Intent FFinalDareSplashToFFinalVoteActivity = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
 
@@ -47,8 +51,6 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
         finalDareParticipantOneTextView = findViewById(R.id.finalDareParticipantOneTextView);
         finalDareParticipantTwoTextView = findViewById(R.id.finalDareParticipantTwoTextView);
-        debugView = findViewById(R.id.debugView);
-
 
         final DatabaseReference lobbyRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
@@ -61,56 +63,35 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                     if (dataSnapshot.exists()) {
 
-                        final ArrayList<Integer> playerScores = new ArrayList();
-                        String loser1UID = "";
-                        String loser2UID = "";
+                        final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                             Player currentPlayer = data.getValue(Player.class);
 
-                            playerScores.add(currentPlayer.getScore());
-                        }
-
-                        Collections.sort(playerScores);
-
-                        finalDareParticipantOneTextView.setText(Integer.toString(playerScores.get(0)));
-
-
-                        for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
-
-                            Player currentPlayer = data.getValue(Player.class);
-
-                            if (currentPlayer.getScore() == playerScores.get(0)) {
+                            if (data.getKey().equals(properties.getFinalDareLoserOne())) {
                                 finalDareParticipantOneTextView.setText(currentPlayer.getNickname());
-                                //  FFinalDareSplashToFFinalVoteActivity.putExtra("Loser1", data.getKey());
-                                loser1UID = data.getKey();
 
-                            } else if (currentPlayer.getScore() == playerScores.get(1)) {
+
+                            } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
                                 finalDareParticipantTwoTextView.setText(currentPlayer.getNickname());
-                                // FFinalDareSplashToFFinalVoteActivity.putExtra("Loser2", data.getKey());
-                                loser2UID = data.getKey();
 
                             }
                         }
 
-
                         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        final String loser1inTimer = loser1UID;
-                        final String loser2inTimer = loser2UID;
 
-                        new CountDownTimer(4000, 1000) {
+                        new CountDownTimer(6000, 1000) {
                             public void onFinish() {
 
-                                if (UIDCLIENT.equals(loser1inTimer) || UIDCLIENT.equals(loser2inTimer)) {
+                                if (UIDCLIENT.equals(properties.getFinalDareLoserOne()) || UIDCLIENT.equals(properties.getFinalDareLoserTwo())) {
 
-                                    Intent FFinalDareLoadingToFLobbDareHold = new Intent(FFinalDareSplashActivity.this, FLosersHoldActivity.class);
-                                    FFinalDareLoadingToFLobbDareHold.putExtra("lobbyCode", lobbyCode);
-                                    startActivity(FFinalDareLoadingToFLobbDareHold);
+                                    FFinalDareLoadingToFLoserseHold.putExtra("lobbyCode", lobbyCode);
+                                    startActivity(FFinalDareLoadingToFLoserseHold);
                                     finish();
 
                                 } else {
-                                    Intent FFinalDareLoadingToFLobbDareHold = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
+
                                     FFinalDareLoadingToFLobbDareHold.putExtra("lobbyCode", lobbyCode);
                                     startActivity(FFinalDareLoadingToFLobbDareHold);
                                     finish();
@@ -127,7 +108,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                     }
                 }catch (Exception e){
-                        debugView.setText(e.toString());
+
                 }
 
             }

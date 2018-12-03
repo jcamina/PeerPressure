@@ -26,12 +26,14 @@ public class FFinalDareLoadingActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
+
         new CountDownTimer(4000, 1000) {
             public void onFinish() {
 
                 Intent FFinalDareLoadingToFLobbDareHold = new Intent(FFinalDareLoadingActivity.this, FLobbyDareHoldActivity.class);
                 FFinalDareLoadingToFLobbDareHold.putExtra("lobbyCode", lobbyCode);
                 startActivity(FFinalDareLoadingToFLobbDareHold);
+
                 finish();
 
             }

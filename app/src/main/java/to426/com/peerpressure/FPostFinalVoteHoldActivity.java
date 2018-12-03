@@ -6,25 +6,23 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class FLobbyDareHoldActivity extends AppCompatActivity {
+public class FPostFinalVoteHoldActivity extends AppCompatActivity {
 
-    public String lobbyCode = "";
+    String lobbyCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flobby_dare_hold);
+        setContentView(R.layout.activity_fpost_final_vote_hold);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
-
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -33,26 +31,37 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
-        //Need to impliment split with losers...
-        final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
-                .child("Games").child(lobbyCode).child("Dares");
 
-        hostCheckRef.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference finalDareAdvanceRef = FirebaseDatabase.getInstance().getReference()
+                .child("Games").child(lobbyCode);
+
+        finalDareAdvanceRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
 
-                   if  (dataSnapshot.child("Final Dare").exists()){
+                    Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
-                       Intent FLobbyDareHoldToFFinalDareSplash = new Intent(FLobbyDareHoldActivity.this,FFinalDareSplashActivity.class);
-                       FLobbyDareHoldToFFinalDareSplash.putExtra("lobbyCode", lobbyCode);
-                       startActivity(FLobbyDareHoldToFFinalDareSplash);
+                   try {
 
-                       hostCheckRef.removeEventListener(this);
+                       if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)) {
 
-                       finish();
-                   }
+                           Intent FPostFinalVoteHoldToFLeaderBoardSplash = new Intent(FPostFinalVoteHoldActivity.this,
+                                   FBiggestLoserSuspenseActivity.class);
+
+                           FPostFinalVoteHoldToFLeaderBoardSplash.putExtra("lobbyCode", lobbyCode);
+                           startActivity(FPostFinalVoteHoldToFLeaderBoardSplash);
+
+                           finalDareAdvanceRef.removeEventListener(this);
+
+                           finish();
+
+                       }
+
+                       }catch (Exception e) {
+
+                    }
                 }
             }
 
@@ -63,4 +72,8 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+
+
+    }
+

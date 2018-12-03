@@ -59,7 +59,6 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-
                     Player currentPlayer = dataSnapshot.getValue(Player.class);
 
                     finalDareNameTextView.setText(currentPlayer.getNickname());
@@ -101,11 +100,11 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
 
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares").setValue("");
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
-                    .child("Final Dare").setValue(new Dare("Final Dare", dareSubmissionText,0,"selectOne"));
+                    .child("Final Dare").setValue(new Dare("Final Dare", dareSubmissionText,0,"selectOne",0));
 
-            Intent REnterDareToRReadyVote = new Intent(FLeaderDareEnterActivity.this,FFinalDareSplashActivity.class);
-            REnterDareToRReadyVote.putExtra("lobbyCode", lobbyCode);
-            startActivity(REnterDareToRReadyVote);
+            Intent FLeaderDareEnterToFFinalDareSplash = new Intent(FLeaderDareEnterActivity.this,FFinalDareSplashActivity.class);
+            FLeaderDareEnterToFFinalDareSplash.putExtra("lobbyCode", lobbyCode);
+            startActivity(FLeaderDareEnterToFFinalDareSplash);
 
             finish();
 

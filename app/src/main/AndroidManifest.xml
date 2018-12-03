@@ -40,7 +40,6 @@
         <activity android:name=".FDarePerformanceActivity" />
         <activity android:name=".FLeaderboardSplash" />
         <activity android:name=".RulesActivity" />
-        <activity android:name=".FPerformaceCompleteConfirmActivity" />
         <activity android:name=".FLosersHoldActivity" />
         <activity android:name=".RReadyVoteHostActivity" />
         <activity android:name=".AfterVoteHoldActivity" />
@@ -49,7 +48,9 @@
         <activity android:name=".REndPartRoundActivity" />
         <activity android:name=".RHostEndPartRoundActivity" />
         <activity android:name=".FFinalDareLoadingHostActivity" />
-        <activity android:name=".FFinalDareLoadingActivity"></activity>
+        <activity android:name=".FFinalDareLoadingActivity" />
+        <activity android:name=".FPostFinalVoteHoldActivity" />
+        <activity android:name=".FBiggestLoserSuspenseActivity"></activity>
     </application>
 
 </manifest>

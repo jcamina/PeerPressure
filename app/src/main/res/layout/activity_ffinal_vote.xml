@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.115" />
 
     <Button
-        android:id="@+id/name1Button"
+        android:id="@+id/finalDareVoteOneButton"
         android:layout_width="272dp"
         android:layout_height="92dp"
         android:layout_marginStart="8dp"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.359" />
 
     <Button
-        android:id="@+id/name2Button"
+        android:id="@+id/finalDareVoteTwoButton"
         android:layout_width="272dp"
         android:layout_height="93dp"
         android:layout_marginTop="8dp"

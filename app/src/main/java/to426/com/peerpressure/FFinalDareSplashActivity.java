@@ -26,12 +26,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
 
-    Intent FFinalDareLoadingToFLoserseHold = new Intent(FFinalDareSplashActivity.this, FDarePerformanceActivity.class);
-    Intent FFinalDareLoadingToFLobbDareHold = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
 
-
-
-//    Intent FFinalDareSplashToFFinalVoteActivity = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +74,8 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                             }
                         }
 
+                        /*
+
                         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         new CountDownTimer(6000, 1000) {
@@ -86,14 +83,18 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                                 if (UIDCLIENT.equals(properties.getFinalDareLoserOne()) || UIDCLIENT.equals(properties.getFinalDareLoserTwo())) {
 
-                                    FFinalDareLoadingToFLoserseHold.putExtra("lobbyCode", lobbyCode);
-                                    startActivity(FFinalDareLoadingToFLoserseHold);
+                                    Intent FFinalDareLoadingToFLosersHold = new Intent(FFinalDareSplashActivity.this, FDarePerformanceActivity.class)
+
+                                    FFinalDareLoadingToFLosersHold.putExtra("lobbyCode", lobbyCode);
+                                    startActivity(FFinalDareLoadingToFLosersHold);
                                     finish();
 
                                 } else {
 
-                                    FFinalDareLoadingToFLobbDareHold.putExtra("lobbyCode", lobbyCode);
-                                    startActivity(FFinalDareLoadingToFLobbDareHold);
+                                    Intent FFinalDareLoadingToFLobbyDareHold = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
+
+                                    FFinalDareLoadingToFLobbyDareHold.putExtra("lobbyCode", lobbyCode);
+                                    startActivity(FFinalDareLoadingToFLobbyDareHold);
                                     finish();
                                 }
 
@@ -104,6 +105,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                         }.start();
 
+                        */
 
 
                     }

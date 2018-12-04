@@ -97,18 +97,16 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
                                 loser2UID = data.getKey();
 
                             }
-
                         }
 
-                        lobbyRef.child("Properties").setValue(new GameProperties("Final Round","Default",0,true,true,loser1UID, loser2UID));
-
+                        lobbyRef.child("Properties").setValue(new GameProperties("Final Round",
+                                "Default",0,true,true,loser1UID, loser2UID));
                     }
-                }catch (Exception e){
+
+                } catch (Exception e) {
 
                 }
-
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

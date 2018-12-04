@@ -34,7 +34,6 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
 
@@ -62,18 +61,14 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
                     Player currentPlayer = dataSnapshot.getValue(Player.class);
 
                     finalDareNameTextView.setText(currentPlayer.getNickname());
-
                 }
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
+
             }
         });
-
-
     }
 
     @Override
@@ -84,7 +79,6 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
             submitDare();
 
         }
-
     }
 
     public void submitDare() {
@@ -92,6 +86,7 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
         String dareSubmissionText = enterFinalDareEditText.getText().toString();
 
         if (dareSubmissionText.isEmpty()) {
+
             Toast.makeText(this, "ERROR: No Text Inputted!", Toast.LENGTH_SHORT).show();
 
         } else {

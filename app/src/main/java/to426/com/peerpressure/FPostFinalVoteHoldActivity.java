@@ -43,37 +43,32 @@ public class FPostFinalVoteHoldActivity extends AppCompatActivity {
 
                     Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
-                   try {
+                    try {
 
-                       if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)) {
+                        if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)) {
 
-                           Intent FPostFinalVoteHoldToFLeaderBoardSplash = new Intent(FPostFinalVoteHoldActivity.this,
+                            Intent FPostFinalVoteHoldToFLeaderBoardSplash = new Intent(FPostFinalVoteHoldActivity.this,
                                    FBiggestLoserSuspenseActivity.class);
 
-                           FPostFinalVoteHoldToFLeaderBoardSplash.putExtra("lobbyCode", lobbyCode);
-                           startActivity(FPostFinalVoteHoldToFLeaderBoardSplash);
+                            FPostFinalVoteHoldToFLeaderBoardSplash.putExtra("lobbyCode", lobbyCode);
 
-                           finalDareAdvanceRef.removeEventListener(this);
+                            startActivity(FPostFinalVoteHoldToFLeaderBoardSplash);
 
-                           finish();
+                            finalDareAdvanceRef.removeEventListener(this);
 
-                       }
+                            finish();
+                        }
 
-                       }catch (Exception e) {
+                    } catch (Exception e) {
 
                     }
                 }
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
             }
         });
     }
-
-
-
-    }
+}
 

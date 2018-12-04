@@ -64,27 +64,25 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
 
                 if (dataSnapshot.exists()) {
 
-                        Dare finalDare = dataSnapshot.child("Final Dare").getValue(Dare.class);
+                    Dare finalDare = dataSnapshot.child("Final Dare").getValue(Dare.class);
 
-                        if (inDareSelected.equals("selectOne")) {
+                    if (inDareSelected.equals("selectOne")) {
 
+                        finalDare.setVoteCount(finalDare.getVoteCount() + 1);
 
-                            finalDare.setVoteCount(finalDare.getVoteCount() + 1);
+                    } else if (inDareSelected.equals("selectTwo")){
 
+                        finalDare.setVoteCountExtra(finalDare.getVoteCountExtra() + 1);
 
-                        } else if (inDareSelected.equals("selectTwo")){
+                    }
 
-                            finalDare.setVoteCountExtra(finalDare.getVoteCountExtra() + 1);
-
-                        }
-                            finalDareRef.child("Final Dare").setValue(finalDare);
+                    finalDareRef.child("Final Dare").setValue(finalDare);
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
+
             }
         });
 
@@ -99,29 +97,20 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
-
                 if (dataSnapshot.exists()) {
 
-                    final ArrayList<Integer> playerScores = new ArrayList();
+                    final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
                     for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                         Player currentPlayer = data.getValue(Player.class);
 
-                        playerScores.add(currentPlayer.getScore());
-                    }
+                        if (data.getKey().equals(properties.getFinalDareLoserOne())) {
 
-                    Collections.sort(playerScores);
-
-
-                    for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
-
-                        Player currentPlayer = data.getValue(Player.class);
-
-                        if (currentPlayer.getScore() == playerScores.get(0)) {
                             finalDareVoteOneButton.setText(currentPlayer.getNickname());
 
-                        } else if (currentPlayer.getScore() == playerScores.get(1)) {
+                        } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
+
                             finalDareVoteTwoButton.setText(currentPlayer.getNickname());
 
                         }
@@ -131,7 +120,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
+
             }
         });
 
@@ -152,8 +141,8 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
             Intent RVoteActiveToRAfterVoteHold = new Intent(FFinalVoteActivity.this,FPostFinalVoteHoldActivity.class);
             RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
             startActivity(RVoteActiveToRAfterVoteHold);
-            finish();
 
+            finish();
 
         } else if (v == finalDareVoteTwoButton) {
 
@@ -165,6 +154,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
             Intent RVoteActiveToRAfterVoteHold = new Intent(FFinalVoteActivity.this,FPostFinalVoteHoldActivity.class);
             RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
             startActivity(RVoteActiveToRAfterVoteHold);
+
             finish();
 
 

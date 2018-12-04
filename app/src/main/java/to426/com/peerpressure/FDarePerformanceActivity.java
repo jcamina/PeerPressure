@@ -56,7 +56,6 @@ public class FDarePerformanceActivity extends AppCompatActivity {
                     Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
                     darePerformanceNicknameTextView.setText(loserPlayer.getNickname());
-
                     darePerformanceDareTextView.setText(finalDare.getDareMessage());
 
                 }
@@ -72,9 +71,10 @@ public class FDarePerformanceActivity extends AppCompatActivity {
         new CountDownTimer(6000, 1000) {
             public void onFinish() {
 
-                Intent FFinalDareLoadingToFLoserseHold = new Intent(FDarePerformanceActivity.this, FLobbyDareHoldActivity.class);
+                Intent FFinalDareLoadingToFLoserseHold = new Intent(FDarePerformanceActivity.this, FLosersHoldActivity.class);
                 FFinalDareLoadingToFLoserseHold.putExtra("lobbyCode", lobbyCode);
                 startActivity(FFinalDareLoadingToFLoserseHold);
+
                 finish();
 
             }

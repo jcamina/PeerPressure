@@ -25,7 +25,6 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
 
@@ -33,7 +32,7 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
-        //Need to impliment split with losers...
+
         final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode).child("Dares");
 
@@ -43,7 +42,7 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
-                   if  (dataSnapshot.child("Final Dare").exists()){
+                   if  (dataSnapshot.child("Final Dare").exists()) {
 
                        Intent FLobbyDareHoldToFFinalDareSplash = new Intent(FLobbyDareHoldActivity.this,FFinalDareSplashActivity.class);
                        FLobbyDareHoldToFFinalDareSplash.putExtra("lobbyCode", lobbyCode);
@@ -56,10 +55,8 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
             }
         });
     }

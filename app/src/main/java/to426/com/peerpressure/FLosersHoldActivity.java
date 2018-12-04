@@ -43,7 +43,6 @@ public class FLosersHoldActivity extends AppCompatActivity {
 
                    Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
-
                    if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)){
 
                        Intent FLobbyDareHoldToFFinalDareSplash = new Intent(FLosersHoldActivity.this,FBiggestLoserSuspenseActivity.class);
@@ -53,15 +52,13 @@ public class FLosersHoldActivity extends AppCompatActivity {
                        hostCheckRef.removeEventListener(this);
 
                        finish();
-
                     }
                 }
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
+
             }
         });
     }

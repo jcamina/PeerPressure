@@ -37,6 +37,22 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
         }
 
+        new CountDownTimer(4000, 1000) {
+            public void onFinish() {
+
+                Intent FBiggestLoserSuspenseToFLeaderboardSplash = new Intent(
+                        FBiggestLoserSuspenseActivity.this,FLeaderboardSplash.class);
+                FBiggestLoserSuspenseToFLeaderboardSplash.putExtra("lobbyCode", lobbyCode);
+                startActivity(FBiggestLoserSuspenseToFLeaderboardSplash);
+
+            }
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+        }.start();
+
         final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
@@ -46,47 +62,22 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
-                    Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
+                    final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+                    Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
 
-                    if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)){
+                    if (currentPlayer.getIsHost()) {
 
-                        final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                        Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
-
-                        if (currentPlayer.getIsHost()) {
-
-                            //setFinalDareScore();
-
-                        }
-
-
-
-                        new CountDownTimer(4000, 1000) {
-                            public void onFinish() {
-
-                                Intent FBiggestLoserSuspenseToFLeaderboardSplash = new Intent(FBiggestLoserSuspenseActivity.this,FLeaderboardSplash.class);
-                                FBiggestLoserSuspenseToFLeaderboardSplash.putExtra("lobbyCode", lobbyCode);
-                                startActivity(FBiggestLoserSuspenseToFLeaderboardSplash);
-
-                            }
-
-                            public void onTick(long millisUntilFinished) {
-
-                            }
-
-                        }.start();
-
-                        hostCheckRef.removeEventListener(this);
-
-                        finish();
-
+                        setFinalDareScore();
 
                     }
+
+                    hostCheckRef.removeEventListener(this);
+
+                    finish();
+
                 }
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -104,22 +95,11 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
-
+                if (dataSnapshot.exists()) {
 
                     if (dataSnapshot.exists()) {
 
-                        final ArrayList<Integer> playerScores = new ArrayList();
-                        String loser1UID = "";
-                        String loser2UID = "";
-
-                        for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
-
-                            Player currentPlayer = data.getValue(Player.class);
-
-                            playerScores.add(currentPlayer.getScore());
-                        }
-
-                        Collections.sort(playerScores);
+                        final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
                         Dare finalDare = dataSnapshot.child("Dare").child("Final Dare").getValue(Dare.class);
 
@@ -127,19 +107,20 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                             Player currentPlayer = data.getValue(Player.class);
 
-                            if (currentPlayer.getScore() == playerScores.get(0)) {
+                            if (data.getKey().equals(properties.getFinalDareLoserOne())) {
 
                                 if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
                                     currentPlayer.setScore(currentPlayer.getScore() + 1000);
                                     lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
                                 } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+
                                     currentPlayer.setScore(currentPlayer.getScore() - 1000);
                                     lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
                                 }
 
-                            } else if (currentPlayer.getScore() == playerScores.get(1)) {
+                            } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
 
                                 if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
                                     currentPlayer.setScore(currentPlayer.getScore() + 1000);
@@ -150,29 +131,19 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
                                     lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
                                 }
-
-
                             }
                         }
                     }
-
+                }
             }
-
-
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // ...
             }
         });
-
-
-
     }
-
-
-    }
+}
 
 
 

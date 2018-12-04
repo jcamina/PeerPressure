@@ -67,14 +67,11 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                             if (data.getKey().equals(properties.getFinalDareLoserOne())) {
                                 finalDareParticipantOneTextView.setText(currentPlayer.getNickname());
 
-
                             } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
                                 finalDareParticipantTwoTextView.setText(currentPlayer.getNickname());
 
                             }
                         }
-
-                        /*
 
                         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -83,8 +80,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                                 if (UIDCLIENT.equals(properties.getFinalDareLoserOne()) || UIDCLIENT.equals(properties.getFinalDareLoserTwo())) {
 
-                                    Intent FFinalDareLoadingToFLosersHold = new Intent(FFinalDareSplashActivity.this, FDarePerformanceActivity.class)
-
+                                    Intent FFinalDareLoadingToFLosersHold = new Intent(FFinalDareSplashActivity.this, FDarePerformanceActivity.class);
                                     FFinalDareLoadingToFLosersHold.putExtra("lobbyCode", lobbyCode);
                                     startActivity(FFinalDareLoadingToFLosersHold);
                                     finish();
@@ -92,35 +88,27 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                                 } else {
 
                                     Intent FFinalDareLoadingToFLobbyDareHold = new Intent(FFinalDareSplashActivity.this, FFinalVoteActivity.class);
-
                                     FFinalDareLoadingToFLobbyDareHold.putExtra("lobbyCode", lobbyCode);
                                     startActivity(FFinalDareLoadingToFLobbyDareHold);
                                     finish();
                                 }
-
                             }
 
                             public void onTick(long millisUntilFinished) {
                             }
 
                         }.start();
-
-                        */
-
-
                     }
-                }catch (Exception e){
+
+                } catch (Exception e){
 
                 }
-
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // ...
             }
         });
-
     }
 }

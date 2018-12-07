@@ -37,6 +37,8 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
         }
 
+
+
         new CountDownTimer(4000, 1000) {
             public void onFinish() {
 
@@ -44,6 +46,8 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
                         FBiggestLoserSuspenseActivity.this,FLeaderboardSplash.class);
                 FBiggestLoserSuspenseToFLeaderboardSplash.putExtra("lobbyCode", lobbyCode);
                 startActivity(FBiggestLoserSuspenseToFLeaderboardSplash);
+
+                finish();
 
             }
 
@@ -53,10 +57,12 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
         }.start();
 
-        final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
+
+
+        final DatabaseReference lobbyRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
-        hostCheckRef.addValueEventListener(new ValueEventListener() {
+        lobbyRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -71,11 +77,6 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
                         setFinalDareScore();
 
                     }
-
-                    hostCheckRef.removeEventListener(this);
-
-                    finish();
-
                 }
             }
 
@@ -97,43 +98,49 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
-                    if (dataSnapshot.exists()) {
+                    final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
-                        final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+                    Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
-                        Dare finalDare = dataSnapshot.child("Dare").child("Final Dare").getValue(Dare.class);
+                    for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
-                        for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
+                        Player currentPlayer = data.getValue(Player.class);
 
-                            Player currentPlayer = data.getValue(Player.class);
+                        if (data.getKey().equals(properties.getFinalDareLoserOne())) {
 
-                            if (data.getKey().equals(properties.getFinalDareLoserOne())) {
 
-                                if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
-                                    currentPlayer.setScore(currentPlayer.getScore() + 1000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
-                                } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+                            if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
 
-                                    currentPlayer.setScore(currentPlayer.getScore() - 1000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
+                                currentPlayer.setScore(currentPlayer.getScore() + 1000);
+                                lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
-                                }
+                            } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+
+                                currentPlayer.setScore(currentPlayer.getScore() - 1000);
+                                lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
+
+                            }
+
 
                             } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
 
+
                                 if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+
                                     currentPlayer.setScore(currentPlayer.getScore() + 1000);
                                     lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
 
                                 } else if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
+
                                     currentPlayer.setScore(currentPlayer.getScore() - 1000);
                                     lobbyRef.child("Players").child(data.getKey()).setValue(currentPlayer);
-
                                 }
+
                             }
+
                         }
-                    }
+
                 }
             }
 

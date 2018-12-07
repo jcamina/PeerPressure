@@ -107,7 +107,7 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
                         if (!(dataSnapshot.child("Players").child(UIDCLIENT).exists())) {
 
                             gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDCLIENT)
-                                    .setValue(new Player(UIDCLIENT, NICKNAME, SCORE, ISHOST));
+                                    .setValue(new Player(NICKNAME, SCORE, ISHOST));
 
                             Toast.makeText(JoinGameActivity.this, "Lobby Joined Successfully!", Toast.LENGTH_SHORT).show();
 

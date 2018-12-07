@@ -45,9 +45,9 @@ public class FLosersHoldActivity extends AppCompatActivity {
 
                    if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)){
 
-                       Intent FLobbyDareHoldToFFinalDareSplash = new Intent(FLosersHoldActivity.this,FBiggestLoserSuspenseActivity.class);
-                       FLobbyDareHoldToFFinalDareSplash.putExtra("lobbyCode", lobbyCode);
-                       startActivity(FLobbyDareHoldToFFinalDareSplash);
+                       Intent FLobbyDareHoldToFBLSuspense = new Intent(FLosersHoldActivity.this,FBiggestLoserSuspenseActivity.class);
+                       FLobbyDareHoldToFBLSuspense.putExtra("lobbyCode", lobbyCode);
+                       startActivity(FLobbyDareHoldToFBLSuspense);
 
                        hostCheckRef.removeEventListener(this);
 

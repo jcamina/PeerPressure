@@ -50,7 +50,7 @@
         <activity android:name=".FFinalDareLoadingHostActivity" />
         <activity android:name=".FFinalDareLoadingActivity" />
         <activity android:name=".FPostFinalVoteHoldActivity" />
-        <activity android:name=".FBiggestLoserSuspenseActivity"></activity>
+        <activity android:name=".FBiggestLoserSuspenseActivity" />
     </application>
 
 </manifest>

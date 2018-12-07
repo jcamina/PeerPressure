@@ -14,8 +14,17 @@ public class Player {
 
     }
 
+
     public Player (String inUID, String inNickname, int inScore, boolean inIsHost){
         UID = inUID;
+        nickname = inNickname;
+        score = inScore;
+        isHost = inIsHost;
+
+    }
+
+
+    public Player ( String inNickname, int inScore, boolean inIsHost){
         nickname = inNickname;
         score = inScore;
         isHost = inIsHost;

@@ -83,6 +83,9 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
                     currentPlayerNameTextView.setText(currentPlayer.getNickname() + ",");
 
+                    Toast.makeText(REnterDareActivity.this, currentPlayer.getUID(), Toast.LENGTH_SHORT).show();
+
+
                 }
             }
 

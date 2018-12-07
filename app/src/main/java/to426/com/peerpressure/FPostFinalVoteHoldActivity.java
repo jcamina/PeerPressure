@@ -47,12 +47,12 @@ public class FPostFinalVoteHoldActivity extends AppCompatActivity {
 
                         if ((finalDare.getVoteCount() + finalDare.getVoteCountExtra()) == (dataSnapshot.child("Players").getChildrenCount() - 2)) {
 
-                            Intent FPostFinalVoteHoldToFLeaderBoardSplash = new Intent(FPostFinalVoteHoldActivity.this,
+                            Intent FPostFinalVoteHoldToFBLSuspense = new Intent(FPostFinalVoteHoldActivity.this,
                                    FBiggestLoserSuspenseActivity.class);
 
-                            FPostFinalVoteHoldToFLeaderBoardSplash.putExtra("lobbyCode", lobbyCode);
+                            FPostFinalVoteHoldToFBLSuspense.putExtra("lobbyCode", lobbyCode);
 
-                            startActivity(FPostFinalVoteHoldToFLeaderBoardSplash);
+                            startActivity(FPostFinalVoteHoldToFBLSuspense);
 
                             finalDareAdvanceRef.removeEventListener(this);
 

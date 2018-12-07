@@ -96,7 +96,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
             } else {
 
                 gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDHOST).
-                        setValue(new Player(UIDHOST, NICKNAME, SCORE, ISHOST));
+                        setValue(new Player(NICKNAME, SCORE, ISHOST));
 
                 gameRef.child("Games").child(LOBBYCODE).child("Properties").
                         setValue(new GameProperties("Lobby","Default",false,0,false,false));

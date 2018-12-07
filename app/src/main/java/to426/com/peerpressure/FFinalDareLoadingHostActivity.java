@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -15,11 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
     String lobbyCode = "";
+    public TextView finalDareTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
+
+        finalDareTitleTextView = findViewById(R.id.finalDareTitleTextView);
 
 
         Intent retrieveCode = getIntent();
@@ -38,15 +44,20 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
         }
 
+        selectFinalDareParticipants();
+
         new CountDownTimer(4000, 1000) {
             public void onFinish() {
 
-                selectFinalDareParticipants();
+
+
                 final Intent FFinalDareLoadingToFLeaderDareEnter = new Intent(FFinalDareLoadingHostActivity.this, FLeaderDareEnterActivity.class);
                 FFinalDareLoadingToFLeaderDareEnter.putExtra("lobbyCode", lobbyCode);
 
                 startActivity(FFinalDareLoadingToFLeaderDareEnter);
                 finish();
+
+
 
             }
 
@@ -70,7 +81,7 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
                     if (dataSnapshot.exists()) {
 
-                        final ArrayList<Integer> playerScores = new ArrayList();
+                        final ArrayList<Player> playerScores = new ArrayList();
                         String loser1UID = "";
                         String loser2UID = "";
 
@@ -78,21 +89,25 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
                             Player currentPlayer = data.getValue(Player.class);
 
-                            playerScores.add(currentPlayer.getScore());
+                            playerScores.add(new Player(data.getKey(),currentPlayer.getNickname(),currentPlayer.getScore(),currentPlayer.getIsHost()));
+
                         }
 
-                        // Sort Lowest Score To Highest Score
-                        Collections.sort(playerScores);
+                        // Sort in Birds In Proper Order
+                        Collections.sort(playerScores, new Comparator<Player>() {
+                            public int compare(Player p1, Player p2) {
+                                return Integer.valueOf(p1.getScore()).compareTo(p2.getScore());
+                            }
+                        });
+
 
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
-                            Player currentPlayer = data.getValue(Player.class);
-
-                            if (currentPlayer.getScore() == playerScores.get(0)) {
+                            if (data.getKey().equals(playerScores.get(0).getUID())) {
 
                                 loser1UID = data.getKey();
 
-                            } else if (currentPlayer.getScore() == playerScores.get(1)) {
+                            } else if (data.getKey().equals(playerScores.get(1).getUID())) {
 
                                 loser2UID = data.getKey();
 
@@ -101,6 +116,7 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
                         lobbyRef.child("Properties").setValue(new GameProperties("Final Round",
                                 "Default",0,true,true,loser1UID, loser2UID));
+
                     }
 
                 } catch (Exception e) {

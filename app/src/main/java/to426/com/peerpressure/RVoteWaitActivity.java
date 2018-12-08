@@ -156,8 +156,12 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                         } else if (voteOne == voteTwo){
 
-                            Toast.makeText(RVoteWaitActivity.this, "Dare Tie!",
-                                    Toast.LENGTH_LONG).show();
+                            Intent RVoteWaitToRPostVoteTie = new Intent(RVoteWaitActivity.this, RPostVoteTieHold.class);
+                            RVoteWaitToRPostVoteTie.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RVoteWaitToRPostVoteTie);
+
+                            currentLobby.removeEventListener(this);
+                            finish();
 
                         }
                     }

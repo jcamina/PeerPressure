@@ -38,10 +38,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-        loginButton = (Button) findViewById(R.id.loginButton);
-        registerButton = (Button) findViewById(R.id.registerButton);
-        userNameEditText = (EditText) findViewById(R.id.userNameEditText);
-        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
+        userNameEditText = findViewById(R.id.userNameEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
 
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
@@ -91,8 +91,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("success", "createUserWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Account Successfully Created",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Account Has Been Successfully Created!",
+                                    Toast.LENGTH_LONG).show();
 
                             registerButton.setEnabled(false);
 
@@ -108,6 +108,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             userNameEditText.setText("");
                             passwordEditText.setText("");
+                            registerButton.setEnabled(true);
+
                         }
 
                     }
@@ -125,15 +127,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Successful",
-                                    Toast.LENGTH_SHORT).show();
 
-                            loginButton.setEnabled(false);
-
+                            //Moves To Next Activity if Login Successful
                             Intent loginToJoinCreate = new Intent(LoginActivity.this, JoinCreateGameActivity.class);
-
                             LoginActivity.this.startActivity(loginToJoinCreate);
                             finish();
+
                         } else {
                             Log.w("hi", "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(),
@@ -145,6 +144,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             userNameEditText.setText("");
                             passwordEditText.setText("");
+
+                            loginButton.setEnabled(true);
+
                         }
                     }
                 });
@@ -173,10 +175,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 userNameEditText.setText("");
                 passwordEditText.setText("");
 
-                Toast.makeText(LoginActivity.this, "Login / Password Left Blank!",
+                Toast.makeText(LoginActivity.this, "Email / Password Left Blank!",
                         Toast.LENGTH_SHORT).show();
             } else {
                 registerUser(email, password);
+
+                //Disables Multiple Button Presses
+                registerButton.setEnabled(false);
+
 
             }
 
@@ -191,10 +197,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 passwordEditText.setText("");
 
 
-                Toast.makeText(LoginActivity.this, "Login / Password Left Blank!",
+                Toast.makeText(LoginActivity.this, "Email / Password Left Blank!",
                         Toast.LENGTH_SHORT).show();
             } else {
                 signIn(email, password);
+
+                //Disables Multiple Button Presses
+                loginButton.setEnabled(false);
+
             }
 
 

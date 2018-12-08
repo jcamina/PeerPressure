@@ -51,6 +51,7 @@
         <activity android:name=".FFinalDareLoadingActivity" />
         <activity android:name=".FPostFinalVoteHoldActivity" />
         <activity android:name=".FBiggestLoserSuspenseActivity" />
+        <activity android:name=".RPostVoteTieHold"></activity>
     </application>
 
 </manifest>

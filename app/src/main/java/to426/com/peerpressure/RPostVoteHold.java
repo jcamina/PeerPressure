@@ -82,7 +82,6 @@ public class RPostVoteHold extends AppCompatActivity {
                     {
                         String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
                         Toast.makeText(RPostVoteHold.this, "Everybody Has Voted!",
                                 Toast.LENGTH_LONG).show();
 
@@ -156,6 +155,14 @@ public class RPostVoteHold extends AppCompatActivity {
 
                             Toast.makeText(RPostVoteHold.this, "Dare Tie!",
                                     Toast.LENGTH_LONG).show();
+
+                                Intent RPostVoteToRPostVoteTie = new Intent(RPostVoteHold.this, RPostVoteTieHold.class);
+                                RPostVoteToRPostVoteTie.putExtra("lobbyCode", lobbyCode);
+                                startActivity(RPostVoteToRPostVoteTie);
+
+                                currentLobby.removeEventListener(this);
+                                finish();
+
 
                         }
                     }

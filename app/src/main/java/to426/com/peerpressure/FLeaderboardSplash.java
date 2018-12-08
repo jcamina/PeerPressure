@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +21,7 @@ import java.util.Comparator;
 public class FLeaderboardSplash extends AppCompatActivity {
 
     String lobbyCode = "";
-    public TextView restofFieldTextView;
+    public TextView leaderBoardOutputTextView;
     public TextView biggestLoserOutputTextView;
 
     @Override
@@ -39,7 +40,7 @@ public class FLeaderboardSplash extends AppCompatActivity {
 
         }
 
-        restofFieldTextView = findViewById(R.id.restofFieldTextView);
+        leaderBoardOutputTextView = findViewById(R.id.leaderBoardOutputTextView);
         biggestLoserOutputTextView = findViewById(R.id.biggestLoserOutputTextView);
 
         setLeaderboardDisplay();
@@ -52,11 +53,9 @@ public class FLeaderboardSplash extends AppCompatActivity {
         final DatabaseReference lobbyRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
-        lobbyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        lobbyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-
-                try {
 
                     if (dataSnapshot.exists()) {
 
@@ -71,6 +70,7 @@ public class FLeaderboardSplash extends AppCompatActivity {
 
                         // Sort Lowest Score To Highest Score
 
+
                         // Sort in Birds In Proper Order
                         Collections.sort(playerScores, new Comparator<Player>() {
                             public int compare(Player p1, Player p2) {
@@ -79,17 +79,19 @@ public class FLeaderboardSplash extends AppCompatActivity {
                         });
 
 
-                        for (int i = 1; i < playerScores.size(); i++) {
-                            restofFieldTextView.append(playerScores.get(i).getNickname() + " " + playerScores.get(i).getScore() + "\n");
+                        // StringBuilder Used to Print Array List To TextView
+                        StringBuilder builder = new StringBuilder();
+                        for (Player details : playerScores) {
+                            builder.append(details.getNickname() + " Score:" + details.getScore() + "\n");
                         }
 
-                        biggestLoserOutputTextView.setText(playerScores.get(0).getNickname());
+
+                        leaderBoardOutputTextView.setText(builder.toString());
+
+                        biggestLoserOutputTextView.setText(playerScores.get(0).getNickname() + " " + playerScores.get(0).getScore());
 
                     }
 
-                } catch (Exception e) {
-
-                }
             }
 
             @Override

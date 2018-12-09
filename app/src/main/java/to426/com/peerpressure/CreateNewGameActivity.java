@@ -37,9 +37,9 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-        enterButton = (Button) findViewById(R.id.enterButton);
-        modeSelectSpinner = (Spinner) findViewById(R.id.modeSelectSpinner);
-        nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
+        enterButton = findViewById(R.id.enterButton);
+        modeSelectSpinner = findViewById(R.id.modeSelectSpinner);
+        nicknameEditText = findViewById(R.id.nicknameEditText);
 
         enterButton.setOnClickListener(this);
 
@@ -50,35 +50,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    //Disable Back Button
-    @Override
-    public void onBackPressed() {
-    }
-
-
-
-    @Override
-    public void onClick(View v) {
-
-
-        if (v == enterButton){
-
-            Intent createNewGameToNewGameLobby = new Intent(CreateNewGameActivity.this,
-                    CreateNewGameLobbyActivity.class);
-
-            String lobbyCode = createNewGame();
-
-            if (!(lobbyCode.equals("Error"))) {
-                //Send the Game Code To The Next Screen
-                createNewGameToNewGameLobby.putExtra("lobbyCode", lobbyCode);
-                enterButton.setEnabled(false);
-                startActivity(createNewGameToNewGameLobby);
-                finish();
-
-            }
-        }
-    }
-
+    //Creates a New Lobby
     public String createNewGame() {
 
         final int SCORE  = 0;
@@ -88,26 +60,28 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         final String NICKNAME = nicknameEditText.getText().toString();
 
 
-            if (NICKNAME.isEmpty()) {
-                Toast.makeText(this, "ERROR: Enter A Nickname!", Toast.LENGTH_SHORT).show();
+        if (NICKNAME.isEmpty()) {
 
-                return "Error";
+            Toast.makeText(this, "ERROR: Enter A Nickname!", Toast.LENGTH_SHORT).show();
 
-            } else {
+            return "Error";
 
-                gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDHOST).
-                        setValue(new Player(NICKNAME, SCORE, ISHOST));
+        } else {
 
-                gameRef.child("Games").child(LOBBYCODE).child("Properties").
-                        setValue(new GameProperties("Lobby","Default",false,0,false,false));
+            //Creates Host Player Within The New Game
+            gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDHOST).
+                    setValue(new Player(NICKNAME, SCORE, ISHOST));
 
-                Toast.makeText(this, "Lobby Successfully Created!", Toast.LENGTH_SHORT).show();
+            //Sets the Initial Lobby Properties
+            gameRef.child("Games").child(LOBBYCODE).child("Properties").
+                    setValue(new GameProperties("Lobby","Default",false,0,false,false));
 
-                return LOBBYCODE;
+            return LOBBYCODE;
 
-            }
+        }
     }
 
+    //Randomizes 6 Char String and Returns the Value
     protected String getGameCode() {
         final String AVAILCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder code = new StringBuilder();
@@ -122,4 +96,33 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         return gameCode;
 
     }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == enterButton){
+
+            Intent createNewGameToNewGameLobby = new Intent(CreateNewGameActivity.this,
+                    CreateNewGameLobbyActivity.class);
+
+            String lobbyCode = createNewGame();
+
+            if (!(lobbyCode.equals("Error"))) {
+                //Send the Game Code To The Next Screen
+                createNewGameToNewGameLobby.putExtra("lobbyCode", lobbyCode);
+
+                enterButton.setEnabled(false);
+
+                startActivity(createNewGameToNewGameLobby);
+                finish();
+
+            }
+        }
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
 }

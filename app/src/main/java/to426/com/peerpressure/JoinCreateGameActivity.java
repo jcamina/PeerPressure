@@ -22,19 +22,14 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setIcon(R.drawable.pplogo);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-        newGameButton = (Button) findViewById(R.id.newGameButton);
-        joinGameButton = (Button) findViewById(R.id.joinGameButton);
-        rulesButton = (Button) findViewById(R.id.rulesButton);
+        newGameButton = findViewById(R.id.newGameButton);
+        joinGameButton = findViewById(R.id.joinGameButton);
+        rulesButton = findViewById(R.id.rulesButton);
 
         newGameButton.setOnClickListener(this);
         joinGameButton.setOnClickListener(this);
         rulesButton.setOnClickListener(this);
 
-    }
-
-    //Disable Back Button
-    @Override
-    public void onBackPressed() {
     }
 
     @Override
@@ -62,7 +57,6 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
             startActivity(joinCreateToJoinGame);
             finish();
 
-
         }
         else if (v == rulesButton){
             newGameButton.setEnabled(false);
@@ -71,8 +65,12 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
             startActivity(joinCreateToRules);
             finish();
 
-
         }
 
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
     }
 }

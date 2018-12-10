@@ -49,7 +49,7 @@
         <activity android:name=".FPostFinalVoteHoldActivity" />
         <activity android:name=".FBiggestLoserSuspenseActivity" />
         <activity android:name=".RPostVoteTieHold" />
-
+        <activity android:name=".FLeaderboardSplashTieActivity"></activity>
     </application>
 
 </manifest>

@@ -64,7 +64,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         if (v == mehButton) {
 
-            changeScore(-500);
+            changeScore(-200);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -81,7 +81,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == okButton) {
 
-            changeScore(-250);
+            changeScore(-100);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -97,7 +97,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == goodButton) {
 
-            changeScore(250);
+            changeScore(0);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -113,7 +113,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == greatButton) {
 
-            changeScore(500);
+            changeScore(100);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -129,7 +129,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == amazingButton) {
 
-            changeScore(700);
+            changeScore(200);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -158,6 +158,14 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
                 if (dataSnapshot.exists()) {
 
+                    //Needed To Double the Points Awarded For Round 2
+                    GameProperties currentProperties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+                    int scaleFactor = 1;
+
+                    if (currentProperties.getRoundOneComplete()) {
+                        scaleFactor = 2;
+                    }
+
                     int voteOne = 0;
                     String dareOneUID = "";
 
@@ -183,30 +191,17 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
                         Player playerLost = dataSnapshot.child("Players").child(dareTwoUID).getValue(Player.class);
 
-                        playerLost.setScore(playerLost.getScore() + inScore);
+                        playerLost.setScore(playerLost.getScore() + (inScore * scaleFactor));
 
                         currentLobby.child("Players").child(dareTwoUID).setValue(playerLost);
-
-                        GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
-
-                        properties.setNumVoted(properties.getNumVoted() + 1);
-
-                        currentLobby.child("Properties").setValue(properties);
-
 
                     } else if (voteTwo > voteOne) {
 
                         Player playerLost = dataSnapshot.child("Players").child(dareOneUID).getValue(Player.class);
 
-                        playerLost.setScore(playerLost.getScore() + inScore);
+                        playerLost.setScore(playerLost.getScore() + (inScore * scaleFactor));
 
                         currentLobby.child("Players").child(dareOneUID).setValue(playerLost);
-
-                        GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
-
-                        properties.setNumVoted(properties.getNumVoted() + 1);
-
-                        currentLobby.child("Properties").setValue(properties);
 
                     }
                 }

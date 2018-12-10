@@ -58,22 +58,36 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
+                    //Scales the Scoring Based on the Numbers of Players in the Lobby AND Round
+                    double scaleFactorPlayers = 0.0;
+                    GameProperties currentProperties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+                    if (dataSnapshot.child("Players").getChildrenCount() <= 4) {
+                        scaleFactorPlayers = 1.0;
+                    } else if (dataSnapshot.child("Players").getChildrenCount() > 4 && dataSnapshot.child("Players").getChildrenCount() <= 6) {
+                        scaleFactorPlayers = 1.5;
+                    } else if (dataSnapshot.child("Players").getChildrenCount() > 6 && dataSnapshot.child("Players").getChildrenCount() <= 8){
+                        scaleFactorPlayers = 2.0;
+                    }
+
+                    double scaleFactorRounds = 1.0;
+                    if (currentProperties.getRoundOneComplete()){
+                        scaleFactorRounds = 2.0;
+                    }
+
                     final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
 
                     loserNamePlaceholderTextView.setText(currentPlayer.getNickname());
 
-                    currentPlayer.setScore(currentPlayer.getScore() - 500);
+                    currentPlayer.setScore(currentPlayer.getScore() - (int) (1000 * scaleFactorPlayers * scaleFactorRounds));
 
                     currentLobby.child("Players").child(UIDCLIENT).setValue(currentPlayer);
-
-                    GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
                     currentLobby.removeEventListener(this);
 
                 }
-
             }
 
             @Override

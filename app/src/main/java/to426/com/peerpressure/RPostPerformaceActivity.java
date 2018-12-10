@@ -46,6 +46,8 @@ public class RPostPerformaceActivity extends AppCompatActivity {
         postPerformanceImageView = findViewById(R.id.postPerformanceImageView);
         Glide.with(this).asGif().load(R.drawable.hourglass).into(postPerformanceImageView);
 
+        updateNumVoted();
+
         final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
 
@@ -124,5 +126,30 @@ public class RPostPerformaceActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateNumVoted() {
+        final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
+                .child("Games").child(lobbyCode);
+
+        currentLobby.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+                    properties.setNumVoted(properties.getNumVoted() + 1);
+
+                    currentLobby.child("Properties").setValue(properties);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
     }
 }

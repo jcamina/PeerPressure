@@ -19,7 +19,6 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinCreateGameActivity" />
         <activity android:name=".JoinGameActivity" />
-        <activity android:name=".LobbyHoldingActivity" />
         <activity android:name=".CreateNewGameActivity" />
         <activity android:name=".JoinGameLobbyActivity" />
         <activity android:name=".CreateNewGameLobbyActivity" />
@@ -32,7 +31,6 @@
         <activity android:name=".RDareWinnerActivity" />
         <activity android:name=".RDareLoserActivity" />
         <activity android:name=".RVotePerformanceActivity" />
-        <activity android:name=".REndOfRoundsActivity" />
         <activity android:name=".FLeaderDareEnterActivity" />
         <activity android:name=".FLobbyDareHoldActivity" />
         <activity android:name=".FFinalDareSplashActivity" />

@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,14 +25,13 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
     public Button dareTwoButton;
     public Button dareOneButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_rvote_active);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -38,8 +40,12 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
             lobbyCode = (String) bundle.get("lobbyCode");
         }
 
-        dareOneButton = (Button) findViewById(R.id.dareOneButton);
-        dareTwoButton = (Button) findViewById(R.id.dareTwoButton);
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        dareOneButton = findViewById(R.id.dareOneButton);
+        dareTwoButton = findViewById(R.id.dareTwoButton);
 
         dareOneButton.setOnClickListener(this);
         dareTwoButton.setOnClickListener(this);
@@ -62,11 +68,11 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
 
-                        //If Borrow Byy Value Matches, Add to Array List "Books"
                         Dare currentDare = data.getValue(Dare.class);
 
                         try {
 
+                            //Sets The Text
                             if (currentDare.getDareUsed().equals("selectOne")){
                                 dareOneButton.setText(currentDare.getDareMessage());
                                 selectedDares.removeEventListener(this); // stops from assigning every single one as selected
@@ -82,8 +88,7 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
                         }
                     }
-                    }
-
+                }
             }
 
             @Override
@@ -93,6 +98,7 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    //Called To Increment Dare Vote Count By 1 Vote
     public void incrementDareVote(String inDareSelected) {
 
         final DatabaseReference dares = FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares");
@@ -118,11 +124,8 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
                             Toast.makeText(RVoteActiveActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
-
                     }
-
                 }
-
             }
 
             @Override
@@ -143,13 +146,10 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
             dareTwoButton.setEnabled(false);
             dareOneButton.setEnabled(false);
 
-
-
             Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
             RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
             startActivity(RVoteActiveToRAfterVoteHold);
             finish();
-
 
         } else if (v == dareTwoButton) {
 
@@ -158,12 +158,10 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
             dareTwoButton.setEnabled(false);
             dareOneButton.setEnabled(false);
 
-
             Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
             RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
             startActivity(RVoteActiveToRAfterVoteHold);
             finish();
-
 
         }
 
@@ -172,5 +170,33 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
     //Disable Back Button
     @Override
     public void onBackPressed() {
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+            this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

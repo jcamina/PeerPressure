@@ -7,6 +7,16 @@
     android:exported="true"
     tools:context=".REnterDareActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
+
     <TextView
         android:id="@+id/writeDateTitleTextView"
         android:layout_width="229dp"
@@ -15,7 +25,7 @@
         android:layout_marginBottom="8dp"
         android:text="Enter Your Dare!"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +33,7 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintVertical_bias="0.203" />
 
     <TextView
         android:id="@+id/currentPlayerNameTextView"
@@ -40,57 +50,61 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintVertical_bias="0.116" />
 
     <EditText
         android:id="@+id/enterDareEditText"
-        android:layout_width="323dp"
-        android:layout_height="154dp"
+        android:layout_width="334dp"
+        android:layout_height="196dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="center|top"
-        android:hint="Write Dare Here"
-        android:textAlignment="viewStart"
+        android:hint="Write Your Dare Here!"
         android:inputType="textMultiLine"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintVertical_bias="0.393" />
 
     <Button
         android:id="@+id/desperateDareButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="175dp"
+        android:layout_height="58dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="*Desperate Dare*"
+        android:backgroundTint="#003366"
+        android:text="Desperate Dare"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.655" />
+        app:layout_constraintVertical_bias="0.687" />
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="251dp"
-        android:layout_height="61dp"
+        android:layout_width="268dp"
+        android:layout_height="79dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="56dp"
-        android:background="@android:color/holo_red_dark"
-        android:text="SUBMIT DARE"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Submit Your Dare"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/inRoundTimerTextView"
@@ -100,15 +114,34 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="00:09"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:text="60 Seconds"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.656" />
+        app:layout_constraintVertical_bias="0.69" />
+
+    <TextView
+        android:id="@+id/inRoundTimerTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Time Remaining"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
 
 </android.support.constraint.ConstraintLayout>

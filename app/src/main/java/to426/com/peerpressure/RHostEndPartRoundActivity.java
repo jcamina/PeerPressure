@@ -6,6 +6,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,14 +25,15 @@ import java.util.Random;
 public class RHostEndPartRoundActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
+    //public TextView loadingOutputTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_rhost_end_part_round);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -37,6 +42,12 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
+
+        //loadingOutputTextView = findViewById(R.id.loadingOutputTextView);
+
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
     }
 
@@ -83,6 +94,8 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                             randomizeRemainingRoundDares();
 
+                           // loadingOutputTextView.append(" Rest of Round");
+
 
                         } else if (dareUnusedCounter <= 1) {
 
@@ -92,39 +105,38 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                                 properties.setRoundOneComplete(true);
                                 properties.setDareRoundRandomized(false);
 
+                               // loadingOutputTextView.append(" Round 2");
+
+
                                 currentLobby.child("Properties").setValue(properties);
                                 currentLobby.child("Dares").setValue("");
 
-                                Intent RHostEndPartRoundAToRoundSplash = new Intent(RHostEndPartRoundActivity.this, RoundSplashActivity.class);
+
+                                Intent RHostEndPartRoundAToRoundSplash = new Intent(RHostEndPartRoundActivity.this,
+                                        RoundSplashActivity.class);
                                 RHostEndPartRoundAToRoundSplash.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RHostEndPartRoundAToRoundSplash);
-
-                                currentLobby.removeEventListener(this);
-
                                 finish();
+
                             } else if (properties.getGameProgression().equals("Round 2")) {
 
                                 properties.setGameProgression("Final Round");
                                 properties.setNumVoted(0);
                                 properties.setRoundTwoComplete(true);
 
+                               // loadingOutputTextView.append(" Final Round");
+
                                 currentLobby.child("Properties").setValue(properties);
                                 currentLobby.child("Dares").setValue("");
 
-                                Intent RHostEndPartRoundAToFFinalDareLoadingHost = new Intent(RHostEndPartRoundActivity.this, FFinalDareLoadingHostActivity.class);
+                                Intent RHostEndPartRoundAToFFinalDareLoadingHost = new Intent(RHostEndPartRoundActivity.this,
+                                        FFinalDareLoadingHostActivity.class);
                                 RHostEndPartRoundAToFFinalDareLoadingHost.putExtra("lobbyCode", lobbyCode);
                                 startActivity(RHostEndPartRoundAToFFinalDareLoadingHost);
-
-                                currentLobby.removeEventListener(this);
-
                                 finish();
-
 
                             }
                         }
-
-
-
 
                     currentLobby.removeEventListener(this);
 
@@ -151,84 +163,76 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
-                        final ArrayList<String> dareUIDS = new ArrayList();
+                    final ArrayList<String> dareUIDS = new ArrayList();
 
-                        for (DataSnapshot data : dataSnapshot.child("Dares").getChildren()) {
+                    for (DataSnapshot data : dataSnapshot.child("Dares").getChildren()) {
 
-                            final Dare currentDare = data.getValue(Dare.class);
+                        final Dare currentDare = data.getValue(Dare.class);
 
-                            if (currentDare.getDareUsed().equals("Unused")) {
+                        if (currentDare.getDareUsed().equals("Unused")) {
 
-                                dareUIDS.add(data.getKey());
-                            }
+                            dareUIDS.add(data.getKey());
+
                         }
-
-                            try {
-
-                                String randomDare1 = "";
-                                String randomDare2 = "";
-
-                                int dareCount = dareUIDS.size();
-
-                                int randomVal1 = new Random().nextInt(dareCount);
-
-                                randomDare1 = dareUIDS.get(randomVal1);
-
-                                dareUIDS.remove(randomVal1);
-
-                                if (dareUIDS.size() == 1){
-                                    randomDare2 = dareUIDS.get(0);
-
-                                } else {
-                                    randomDare2 = dareUIDS.get(new Random().nextInt(dareCount - 1));
-
-                                }
-
-
-                                currentLobby.child("Dares").child(randomDare1).child("dareUsed").setValue("selectOne");
-                                currentLobby.child("Dares").child(randomDare2).child("dareUsed").setValue("selectTwo");
-
-                                final String UIDPLAYER = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                                GameProperties currentProperties = dataSnapshot.child("Properties").getValue(GameProperties.class);
-
-                                currentProperties.setDareRoundRandomized(true);
-
-                                currentLobby.child("Properties").setValue(currentProperties);
-
-
-                                if (UIDPLAYER.equals(randomDare1) || UIDPLAYER.equals(randomDare2)) {
-
-                                        Intent RReadVoteToRVoteWait = new Intent(RHostEndPartRoundActivity.this, RVoteWaitActivity.class);
-                                        RReadVoteToRVoteWait.putExtra("lobbyCode", lobbyCode);
-                                        startActivity(RReadVoteToRVoteWait);
-
-                                        currentLobby.removeEventListener(this);
-
-                                        finish();
-
-                            } else {
-
-
-
-                                        Intent RReadVoteToRVoteActive = new Intent(RHostEndPartRoundActivity.this, RVoteActiveActivity.class);
-                                        RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
-                                        startActivity(RReadVoteToRVoteActive);
-
-                                        currentLobby.removeEventListener(this);
-
-                                        finish();
-
-
-
-                            }
-
-                        } catch (Exception e) {
-
-                            }
-
                     }
 
+                    try {
+
+                        String randomDare1 = "";
+                        String randomDare2 = "";
+
+                        int dareCount = dareUIDS.size();
+
+                        int randomVal1 = new Random().nextInt(dareCount);
+
+                        randomDare1 = dareUIDS.get(randomVal1);
+
+                        dareUIDS.remove(randomVal1);
+
+                        if (dareUIDS.size() == 1){
+                            randomDare2 = dareUIDS.get(0);
+
+                        } else {
+                            randomDare2 = dareUIDS.get(new Random().nextInt(dareCount - 1));
+
+                        }
+
+
+                        currentLobby.child("Dares").child(randomDare1).child("dareUsed").setValue("selectOne");
+                        currentLobby.child("Dares").child(randomDare2).child("dareUsed").setValue("selectTwo");
+
+                        final String UIDPLAYER = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                        GameProperties currentProperties = dataSnapshot.child("Properties").getValue(GameProperties.class);
+
+                        currentProperties.setDareRoundRandomized(true);
+
+                        currentLobby.child("Properties").setValue(currentProperties);
+
+
+                        if (UIDPLAYER.equals(randomDare1) || UIDPLAYER.equals(randomDare2)) {
+
+                            Intent RReadVoteToRVoteWait = new Intent(RHostEndPartRoundActivity.this, RVoteWaitActivity.class);
+                            RReadVoteToRVoteWait.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RReadVoteToRVoteWait);
+
+                            finish();
+
+                        } else {
+
+                            Intent RReadVoteToRVoteActive = new Intent(RHostEndPartRoundActivity.this,
+                                                    RVoteActiveActivity.class);
+                            RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RReadVoteToRVoteActive);
+
+                            finish();
+
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+                }
             }
 
             @Override
@@ -236,6 +240,38 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                 // ...
             }
         });
+    }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+            this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

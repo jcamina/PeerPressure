@@ -1,13 +1,6 @@
 package to426.com.peerpressure;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,19 +30,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationIcon(drawable);
         setSupportActionBar(toolbar);
-
-        //Nav Listener
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(WelcomeActivity.this, "Back clicked!",     Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -75,6 +55,25 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(WelcomeActivity.this, RulesActivity.class);
+            WelcomeActivity.this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //Disable Back Button

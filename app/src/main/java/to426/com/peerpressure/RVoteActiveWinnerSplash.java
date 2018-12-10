@@ -6,6 +6,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,10 +27,10 @@ public class RVoteActiveWinnerSplash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_rvote_active_winner_splash);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -36,6 +39,10 @@ public class RVoteActiveWinnerSplash extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
+
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         splashVoteNameTextView = findViewById(R.id.splashVoteNameTextView);
         splashVoteDareTextView = findViewById(R.id.splashVoteDareTextView);
@@ -72,6 +79,7 @@ public class RVoteActiveWinnerSplash extends AppCompatActivity {
                         }
                     }
 
+                    // Selects the name of the Winner of the dare and displays it
                     if (voteOne > voteTwo) {
 
                         Dare winningDare = dataSnapshot.child("Dares").child(dareOneUID).getValue(Dare.class);
@@ -80,7 +88,6 @@ public class RVoteActiveWinnerSplash extends AppCompatActivity {
 
                         Player losingPlayer = dataSnapshot.child("Players").child(dareTwoUID).getValue(Player.class);
                         splashVoteNameTextView.setText(losingPlayer.getNickname());
-
 
                     } else if (voteTwo > voteOne) {
 
@@ -116,6 +123,38 @@ public class RVoteActiveWinnerSplash extends AppCompatActivity {
             }
 
         }.start();
+    }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+           this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

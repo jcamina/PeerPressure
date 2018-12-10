@@ -1,12 +1,14 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,10 +23,10 @@ public class RVoteWaitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_rvote_wait);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
@@ -33,18 +35,18 @@ public class RVoteWaitActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
         }
 
-    }
+        ImageView imageView = (ImageView) findViewById(R.id.hourGlassImageView);
+        Glide.with(this).asGif().load(R.drawable.hourglass).into(imageView);
 
-    //Disable Back Button
-    @Override
-    public void onBackPressed() {
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        //TEMPORARY!!! JUST WANT TO GET THROUGH THE LOGIC WORK!!
 
         final DatabaseReference currentLobby = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode);
@@ -61,7 +63,6 @@ public class RVoteWaitActivity extends AppCompatActivity {
                     int voteTwo = 0;
                     String dareTwoUID = "";
 
-
                     for (DataSnapshot data : dataSnapshot.child("Dares").getChildren()) {
 
                         Dare currentDare = data.getValue(Dare.class);
@@ -70,11 +71,9 @@ public class RVoteWaitActivity extends AppCompatActivity {
                             voteOne = currentDare.getVoteCount();
                             dareOneUID = data.getKey();
 
-
                         } else if (currentDare.getDareUsed().equals("selectTwo")) {
                             voteTwo = currentDare.getVoteCount();
                             dareTwoUID = data.getKey();
-
 
                         }
                     }
@@ -83,13 +82,7 @@ public class RVoteWaitActivity extends AppCompatActivity {
                     {
                         String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
-                        Toast.makeText(RVoteWaitActivity.this, "Everybody Has Voted!",
-                                Toast.LENGTH_LONG).show();
-
                         if (voteOne > voteTwo) {
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 1 Won " + dareOneUID,
-                                    Toast.LENGTH_LONG).show();
 
                             if (dareOneUID.equals(currentUID)){
                                 Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
@@ -117,15 +110,7 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                             }
 
-
-
                         } else if (voteTwo > voteOne){
-
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 2 Won " + dareTwoUID,
-                                    Toast.LENGTH_LONG).show();
-
-                            Toast.makeText(RVoteWaitActivity.this, "Dare 1 Won " + dareOneUID,
-                                    Toast.LENGTH_LONG).show();
 
                             if (dareTwoUID.equals(currentUID)){
                                 Intent RPostVoteToRDareWinner = new Intent(RVoteWaitActivity.this,RDareWinnerActivity.class);
@@ -153,7 +138,6 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                             }
 
-
                         } else if (voteOne == voteTwo){
 
                             Intent RVoteWaitToRPostVoteTie = new Intent(RVoteWaitActivity.this, RPostVoteTieHold.class);
@@ -165,9 +149,7 @@ public class RVoteWaitActivity extends AppCompatActivity {
 
                         }
                     }
-
                 }
-
             }
 
             @Override
@@ -175,8 +157,38 @@ public class RVoteWaitActivity extends AppCompatActivity {
                 // ...
             }
         });
+    }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(RVoteWaitActivity.this, RulesActivity.class);
+            RVoteWaitActivity.this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

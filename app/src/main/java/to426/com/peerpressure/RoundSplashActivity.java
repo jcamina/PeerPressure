@@ -1,20 +1,22 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
 
 public class RoundSplashActivity extends AppCompatActivity {
 
@@ -26,10 +28,10 @@ public class RoundSplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_round_splash);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
         roundTextView = (TextView) findViewById(R.id.roundTextView);
 
@@ -40,8 +42,13 @@ public class RoundSplashActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
         }
 
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         countdownTextView = (TextView) findViewById(R.id.countdownTextView);
 
+        //Countdown to Round Start...
         new CountDownTimer(6000, 1000) {
             public void onFinish() {
                 Intent roundSplashToEnterDare = new Intent(RoundSplashActivity.this,REnterDareActivity.class);
@@ -57,6 +64,7 @@ public class RoundSplashActivity extends AppCompatActivity {
 
         }.start();
 
+        //Check What Round is Completed For Titling Purposes
         final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode).child("Properties");
 
@@ -71,9 +79,9 @@ public class RoundSplashActivity extends AppCompatActivity {
                     String roundTitle = "";
 
                     if (!properties.getRoundOneComplete()) {
-                        roundTitle = "Round 1";
+                        roundTitle = "1";
                     } else if (properties.getRoundOneComplete()){
-                        roundTitle = "Round 2";
+                        roundTitle = "2";
 
                     }
 
@@ -94,10 +102,37 @@ public class RoundSplashActivity extends AppCompatActivity {
 
     }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
     //Disable Back Button
     @Override
     public void onBackPressed() {
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+            this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -6,24 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".FFinalDareSplashActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
     <TextView
         android:id="@+id/name2TextView3"
-        android:layout_width="310dp"
-        android:layout_height="126dp"
+        android:layout_width="157dp"
+        android:layout_height="71dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Are Competing For Your Vote On the FINAL DARE"
+        android:text="Are In The "
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.791" />
+        app:layout_constraintVertical_bias="0.693" />
 
     <TextView
         android:id="@+id/finalDareParticipantOneTextView"
@@ -35,14 +45,15 @@
         android:layout_marginBottom="8dp"
         android:text="[Name 1 Placeholder]"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="28sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.231" />
 
     <TextView
         android:id="@+id/finalDareParticipantTwoTextView"
@@ -54,14 +65,33 @@
         android:layout_marginBottom="8dp"
         android:text="[Name 2 Placeholder]"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="28sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hotSeatLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="HOT SEAT"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        app:layout_constraintVertical_bias="0.768" />
 
     <TextView
         android:id="@+id/name2TextView2"
@@ -74,21 +104,14 @@
         android:text="AND"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
-
-    <TextView
-        android:id="@+id/debugView"
-        android:layout_width="336dp"
-        android:layout_height="68dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="436dp" />
+        app:layout_constraintVertical_bias="0.364" />
 
 
 </android.support.constraint.ConstraintLayout>

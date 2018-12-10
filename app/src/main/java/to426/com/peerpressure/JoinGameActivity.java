@@ -4,8 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -35,14 +41,14 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_game);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.pplogo);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#8b0000")));
 
-        enterButton = (Button) findViewById(R.id.enterButton);
-        lobbyCodeEditText = (EditText) findViewById(R.id.lobbyCodeEditText);
-        nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        setContentView(R.layout.activity_join_game);
+
+        enterButton = findViewById(R.id.enterButton);
+        lobbyCodeEditText = findViewById(R.id.lobbyCodeEditText);
+        nicknameEditText = findViewById(R.id.nicknameEditText);
 
         enterButton.setOnClickListener(this);
 
@@ -50,11 +56,50 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
         gameDatabase = FirebaseDatabase.getInstance();
         gameRef = gameDatabase.getReference();
         playerAuth = FirebaseAuth.getInstance();
+
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(drawable);
+        setSupportActionBar(toolbar);
+
+        //Nav Listener
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent JoinToJoinCreate = new Intent(JoinGameActivity.this, JoinCreateGameActivity.class);
+                startActivity(JoinToJoinCreate);
+                finish();
+            }
+        });
+
+        //Reassigns the Green Check Key in Keyboard!
+        nicknameEditText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                    if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
+                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                        enterButton.setEnabled(false);
+
+                        joinGame();
+
+                        return true;
+                    }
+                return false;
+            }
+        });
+
     }
 
-    //Disable Back Button
+
+    // Menu icons are inflated just as they were with actionbar
     @Override
-    public void onBackPressed() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
     }
 
     @Override
@@ -65,9 +110,6 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
             enterButton.setEnabled(false);
 
             joinGame();
-
-
-
 
         }
     }
@@ -80,6 +122,7 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
         final boolean ISHOST = false;
         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        //Checks if Lobby Code is Empty
         if (NICKNAME.isEmpty() || LOBBYCODE.isEmpty()) {
 
             Toast.makeText(this, "ERROR: Please enter Nickname AND Lobby Code!", Toast.LENGTH_SHORT).show();
@@ -92,7 +135,6 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
             enterButton.setEnabled(true);
 
-
         } else {
 
             final DatabaseReference lobbyCheckRef = FirebaseDatabase.getInstance().getReference()
@@ -104,13 +146,13 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
                     if (dataSnapshot.exists()) {
 
-                        if (!(dataSnapshot.child("Players").child(UIDCLIENT).exists())) {
+                        if (!(dataSnapshot.child("Players").child(UIDCLIENT).exists()) && (dataSnapshot.child("Players").getChildrenCount() < 9)) {
 
+                            //Creates Player within the Lobby
                             gameRef.child("Games").child(LOBBYCODE).child("Players").child(UIDCLIENT)
                                     .setValue(new Player(NICKNAME, SCORE, ISHOST));
 
-                            Toast.makeText(JoinGameActivity.this, "Lobby Joined Successfully!", Toast.LENGTH_SHORT).show();
-
+                            //Joins Lobby if Exists
                             Intent joinGameToJoinGameLobby = new Intent(JoinGameActivity.this, JoinGameLobbyActivity.class);
                             joinGameToJoinGameLobby.putExtra("lobbyCode", LOBBYCODE);
                             startActivity(joinGameToJoinGameLobby);
@@ -118,11 +160,10 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
 
                         } else {
-                            Toast.makeText(JoinGameActivity.this, "ERROR: Somebody is Already Logged-in With This Account!",
+                            Toast.makeText(JoinGameActivity.this, "ERROR: Somebody is Already Logged-in With This Account or There Are Already 8 Players",
                                     Toast.LENGTH_SHORT).show();
 
                             enterButton.setEnabled(true);
-
 
                         }
 
@@ -138,11 +179,8 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
                         enterButton.setEnabled(true);
 
-
                     }
                 }
-
-
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -153,12 +191,34 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
     public TranslateAnimation shakeError() {
         TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
         shake.setDuration(300);
         shake.setInterpolator(new CycleInterpolator(7));
         return shake;
+    }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+            this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Transition Change
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_login);
@@ -69,15 +71,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
 
         //Set The Tool Bar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_arrow_back_black_24dp);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        final Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_arrow_back_black_24dp);
         toolbar.setNavigationIcon(drawable);
         setSupportActionBar(toolbar);
 
         //Nav Listener
         toolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+
                 Intent loginToWelcome = new Intent(LoginActivity.this, WelcomeActivity.class);
                 LoginActivity.this.startActivity(loginToWelcome);
                 finish();
@@ -129,6 +132,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(LoginActivity.this, RulesActivity.class);
+            LoginActivity.this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -272,4 +294,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
+
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
+
 }

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,22 +21,24 @@ import java.util.Random;
 public class RPostVoteTieHold extends AppCompatActivity {
 
     String lobbyCode = "";
-    String dareOneUID = "";
-    String dareTwoUID = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Transition Change
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_rpost_vote_tie_hold);
 
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
 
+        //Set The Tool Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         if (bundle != null) {
             lobbyCode = (String) bundle.get("lobbyCode");
-            dareOneUID = (String) bundle.get("dareOneUID");
-            dareTwoUID = (String) bundle.get("dareTwoUID");
         }
     }
 
@@ -220,8 +225,38 @@ public class RPostVoteTieHold extends AppCompatActivity {
             }
 
         }.start();
+    }
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        return true;
+    }
 
+    //Disable Back Button
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_item_two) {
+
+            Intent toRules = new Intent(this, RulesActivity.class);
+            this.startActivity(toRules);
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

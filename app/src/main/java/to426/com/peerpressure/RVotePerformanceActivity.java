@@ -144,7 +144,6 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
             finish();
 
         }
-
     }
 
     public void changeScore(final int inScore){

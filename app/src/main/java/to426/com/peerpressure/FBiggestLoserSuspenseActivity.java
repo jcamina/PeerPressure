@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,9 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
@@ -75,6 +70,7 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                     Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
+                    //Launches The Tie LeaderBoard Screen if amount of Dares are tied
                     if ((finalDare.getVoteCount() == finalDare.getVoteCountExtra())) {
 
                         new CountDownTimer(4000, 1000) {
@@ -91,7 +87,6 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
                             public void onTick(long millisUntilFinished) {
 
                             }
-
                         }.start();
 
                     } else {
@@ -99,62 +94,57 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
                         //Only Allow Host Phone To Edit the Score!
                         if (currentPlayer.getIsHost()){
 
-                        for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
+                            for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
-                            Player loopingPlayer = data.getValue(Player.class);
+                                Player loopingPlayer = data.getValue(Player.class);
 
+                                // Change Score of the Player if UID matches loser 1
+                                if (data.getKey().equals(properties.getFinalDareLoserOne())) {
 
-                            if (data.getKey().equals(properties.getFinalDareLoserOne())) {
+                                    if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
 
-                                if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
+                                        loopingPlayer.setScore(currentPlayer.getScore() + 2000);
+                                        lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
 
-                                    loopingPlayer.setScore(currentPlayer.getScore() + 2000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
+                                    } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
 
-                                } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+                                        loopingPlayer.setScore(currentPlayer.getScore() - 2000);
+                                        lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
+                                    }
 
-                                    loopingPlayer.setScore(currentPlayer.getScore() - 2000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
+                                // Change Score of the Player if UID matches loser 2
+                                } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
 
+                                    if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
+
+                                        loopingPlayer.setScore(currentPlayer.getScore() + 2000);
+                                        lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
+
+                                    } else if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
+
+                                        loopingPlayer.setScore(currentPlayer.getScore() - 2000);
+                                        lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
+                                    }
                                 }
-
-
-                            } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
-
-
-                                if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
-
-                                    loopingPlayer.setScore(currentPlayer.getScore() + 2000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
-
-                                } else if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
-
-                                    loopingPlayer.setScore(currentPlayer.getScore() - 2000);
-                                    lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
-                                }
-
                             }
                         }
 
+                        new CountDownTimer(4000, 1000) {
+                            public void onFinish() {
 
-                            new CountDownTimer(4000, 1000) {
-                                public void onFinish() {
+                                Intent FBiggestLoserSuspenseToFLeaderboardSplash = new Intent(
+                                        FBiggestLoserSuspenseActivity.this, FLeaderboardSplash.class);
+                                FBiggestLoserSuspenseToFLeaderboardSplash.putExtra("lobbyCode", lobbyCode);
+                                startActivity(FBiggestLoserSuspenseToFLeaderboardSplash);
 
-                                    Intent FBiggestLoserSuspenseToFLeaderboardSplash = new Intent(
-                                            FBiggestLoserSuspenseActivity.this, FLeaderboardSplash.class);
-                                    FBiggestLoserSuspenseToFLeaderboardSplash.putExtra("lobbyCode", lobbyCode);
-                                    startActivity(FBiggestLoserSuspenseToFLeaderboardSplash);
+                                finish();
+                            }
 
-                                    finish();
+                            public void onTick(long millisUntilFinished) {
 
-                                }
+                            }
 
-                                public void onTick(long millisUntilFinished) {
-
-                                }
-
-                            }.start();
-                        }
+                        }.start();
                     }
                 }
             }
@@ -171,6 +161,7 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

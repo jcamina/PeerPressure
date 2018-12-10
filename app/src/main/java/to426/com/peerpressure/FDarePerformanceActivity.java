@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +39,7 @@ public class FDarePerformanceActivity extends AppCompatActivity {
 
         }
 
+        //Set Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,11 +60,11 @@ public class FDarePerformanceActivity extends AppCompatActivity {
 
                     Dare finalDare = dataSnapshot.child("Dares").child("Final Dare").getValue(Dare.class);
 
+                    //Sets the Names Of Losers For Voting
                     darePerformanceNicknameTextView.setText(loserPlayer.getNickname());
                     darePerformanceDareTextView.setText(finalDare.getDareMessage());
 
                 }
-
             }
 
             @Override
@@ -105,6 +104,7 @@ public class FDarePerformanceActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

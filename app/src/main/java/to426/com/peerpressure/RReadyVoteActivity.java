@@ -72,7 +72,6 @@ public class RReadyVoteActivity extends AppCompatActivity {
                             Intent RReadVoteToRVoteActive = new Intent(RReadyVoteActivity.this,RVoteActiveActivity.class);
                             RReadVoteToRVoteActive.putExtra("lobbyCode", lobbyCode);
                             startActivity(RReadVoteToRVoteActive);
-
                         }
 
                        currentLobby.removeEventListener(this);

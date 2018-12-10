@@ -76,6 +76,7 @@ public class RPostVoteHold extends AppCompatActivity {
                         }
                     }
 
+                    //Populate Current Vote Count
                     pleaseWaitTextView.setText(String.valueOf(voteOne + voteTwo));
 
                     //If Everybody Has Voted, Then Announce Winners, Move To Correct Activities

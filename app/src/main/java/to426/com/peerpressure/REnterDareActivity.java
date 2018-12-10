@@ -116,7 +116,6 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
                     Player currentPlayer = dataSnapshot.getValue(Player.class);
 
                     currentPlayerNameTextView.setText(currentPlayer.getNickname() + ",");
-
                 }
             }
 
@@ -140,6 +139,7 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
 
             String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+            //Create new dare based on submission details
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
                     .child(UID).setValue(new Dare(UID, dareSubmissionText,0,"Unused"));
 
@@ -243,8 +243,6 @@ public class REnterDareActivity extends AppCompatActivity implements View.OnClic
                 // ...
             }
         });
-
-
     }
 
     //Disable Back Button

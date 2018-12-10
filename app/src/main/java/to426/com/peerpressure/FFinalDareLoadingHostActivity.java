@@ -1,12 +1,8 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -52,13 +46,15 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
         }
 
+        //Set Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Set Explosion Gif with Glide
         explosionImageView = findViewById(R.id.explosionImageView);
         Glide.with(this).asGif().load(R.drawable.explosion).into(explosionImageView);
 
-
+        //Select Participants
         selectFinalDareParticipants();
 
         new CountDownTimer(4000, 1000) {
@@ -69,7 +65,6 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
                 startActivity(FFinalDareLoadingToFLeaderDareEnter);
                 finish();
-
             }
 
             public void onTick(long millisUntilFinished) {
@@ -92,6 +87,7 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
 
                     if (dataSnapshot.exists()) {
 
+                        //Creating Array list so scores can be sorted right
                         final ArrayList<Player> playerScores = new ArrayList();
                         String loser1UID = "";
                         String loser2UID = "";
@@ -99,8 +95,8 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                             Player currentPlayer = data.getValue(Player.class);
-                            playerScores.add(new Player(data.getKey(),currentPlayer.getNickname(),currentPlayer.getScore(),currentPlayer.getIsHost()));
-
+                            playerScores.add(new Player(data.getKey(),currentPlayer.getNickname(),
+                                    currentPlayer.getScore(),currentPlayer.getIsHost()));
                         }
 
                         // Sort in Birds In Proper Order
@@ -111,6 +107,7 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
                         });
 
 
+                        //Weird Issue With UID Not copying, Used this to grab new string of key
                         for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                             if (data.getKey().equals(playerScores.get(0).getUID())) {
@@ -120,13 +117,12 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
                             } else if (data.getKey().equals(playerScores.get(1).getUID())) {
 
                                 loser2UID = data.getKey();
-
                             }
                         }
 
+                        //Create New Properties with additional parameters
                         lobbyRef.child("Properties").setValue(new GameProperties("Final Round",
                                 "Default",0,true,true,loser1UID, loser2UID));
-
                     }
 
                 } catch (Exception e) {
@@ -155,6 +151,7 @@ public class FFinalDareLoadingHostActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

@@ -85,7 +85,6 @@ public class RDareWinnerActivity extends AppCompatActivity {
 
                     currentLobby.removeEventListener(this);
 
-
                     // Need This For Later Game Progression ~ Couldn't find better spot
                     currentProperties.setDareRoundRandomized(false);
                     currentLobby.child("Properties").setValue(currentProperties);

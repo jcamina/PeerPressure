@@ -127,9 +127,7 @@ public class RReadyVoteHostActivity extends AppCompatActivity {
                             }
 
                             } catch (Exception e) {
-
                         }
-
                     }
                 }
             }

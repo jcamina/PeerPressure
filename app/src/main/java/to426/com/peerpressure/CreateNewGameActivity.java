@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,11 +27,9 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
     public Button enterButton;
     public EditText nicknameEditText;
 
-
     //Database & Auth
     private DatabaseReference gameRef;
     private FirebaseDatabase gameDatabase;
-    private FirebaseAuth playerAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +37,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         //Transition Change
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_create_new_game);
-
 
         enterButton = findViewById(R.id.enterButton);
         modeSelectSpinner = findViewById(R.id.modeSelectSpinner);
@@ -53,7 +47,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         //Database & Auth
         gameDatabase = FirebaseDatabase.getInstance();
         gameRef = gameDatabase.getReference();
-        playerAuth = FirebaseAuth.getInstance();
 
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -61,7 +54,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         toolbar.setNavigationIcon(drawable);
         setSupportActionBar(toolbar);
 
-        //Nav Listener
+        //Nav Listener for Back Button
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,14 +86,11 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
                             finish();
 
                         }
-
-
                         return true;
                     }
                 return false;
             }
         });
-
     }
 
 
@@ -123,7 +113,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
         final String NICKNAME = nicknameEditText.getText().toString();
         final String MODESELECT = modeSelectSpinner.getSelectedItem().toString();
 
-
         if (NICKNAME.isEmpty()) {
 
             Toast.makeText(this, "ERROR: Enter A Nickname!", Toast.LENGTH_SHORT).show();
@@ -143,7 +132,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
                             false));
 
             return LOBBYCODE;
-
         }
     }
 
@@ -160,7 +148,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
 
         String gameCode = code.toString();
         return gameCode;
-
     }
 
     @Override
@@ -181,7 +168,6 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
 
                 startActivity(createNewGameToNewGameLobby);
                 finish();
-
             }
         }
     }
@@ -191,6 +177,7 @@ public class CreateNewGameActivity extends AppCompatActivity implements View.OnC
     public void onBackPressed() {
     }
 
+    //Info Button Listener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

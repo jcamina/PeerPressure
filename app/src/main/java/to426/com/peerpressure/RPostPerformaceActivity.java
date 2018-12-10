@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +41,7 @@ public class RPostPerformaceActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Set Hourglass Gif
         postPerformanceImageView = findViewById(R.id.postPerformanceImageView);
         Glide.with(this).asGif().load(R.drawable.hourglass).into(postPerformanceImageView);
 
@@ -82,9 +81,9 @@ public class RPostPerformaceActivity extends AppCompatActivity {
                             finish();
 
                         }
-
                         currentLobby.removeEventListener(this);
                     }
+
                 }
             }
 

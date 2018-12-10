@@ -1,9 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,25 +8,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class FFinalVoteActivity extends AppCompatActivity implements View.OnClickListener {
 
     String lobbyCode = "";
     public Button finalDareVoteOneButton;
     public Button finalDareVoteTwoButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +47,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
         finalDareVoteTwoButton.setOnClickListener(this);
         finalDareVoteOneButton.setOnClickListener(this);
 
+        //Set Buttons For Voting
         setFinalDareButtons();
 
     }
@@ -73,6 +64,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
 
                     Dare finalDare = dataSnapshot.child("Final Dare").getValue(Dare.class);
 
+                    //Changes Dare Vote Based On Which Button is Clicked
                     if (inDareSelected.equals("selectOne")) {
 
                         finalDare.setVoteCount(finalDare.getVoteCount() + 1);
@@ -108,6 +100,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
 
                     final GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
+                    //Loops to find the correct data for Buttons
                     for (DataSnapshot data : dataSnapshot.child("Players").getChildren()) {
 
                         Player currentPlayer = data.getValue(Player.class);
@@ -137,6 +130,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
 
+        //Click One of these buttons to vote!
         if (v == finalDareVoteOneButton) {
 
             incrementDareVote("selectOne");
@@ -162,7 +156,6 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
             startActivity(RVoteActiveToRAfterVoteHold);
 
             finish();
-
         }
     }
 
@@ -180,6 +173,7 @@ public class FFinalVoteActivity extends AppCompatActivity implements View.OnClic
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

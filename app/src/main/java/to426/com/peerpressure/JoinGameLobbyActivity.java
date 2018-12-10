@@ -1,14 +1,11 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,8 +82,6 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-
-
             }
         });
 
@@ -120,7 +115,6 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
                         Player currentPlayer = data.getValue(Player.class);
                         lobbyPlayersJoinTextView.append(currentPlayer.getNickname() + "\n\n");
-
                     }
 
                     GameProperties properties = dataSnapshot.child("Properties")
@@ -139,7 +133,6 @@ public class JoinGameLobbyActivity extends AppCompatActivity {
 
                     }
                 }
-
             }
 
             @Override

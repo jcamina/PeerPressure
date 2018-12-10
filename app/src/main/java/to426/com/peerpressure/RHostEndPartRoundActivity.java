@@ -25,7 +25,6 @@ import java.util.Random;
 public class RHostEndPartRoundActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
-    //public TextView loadingOutputTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +41,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
 
         }
-
-        //loadingOutputTextView = findViewById(R.id.loadingOutputTextView);
 
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,7 +71,8 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                             String dareStatus =  checkDare.getDareUsed();
 
-                           if (dareStatus.equals("selectOne") || dareStatus.equals("selectTwo")){
+                            //Setup Dare Random Selection
+                           if (dareStatus.equals("selectOne") || dareStatus.equals("selectTwo")) {
 
                                checkDare.setDareUsed("Used");
 
@@ -92,9 +90,8 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                             currentLobby.child("Properties").setValue(properties);
 
+                            //In round randomize
                             randomizeRemainingRoundDares();
-
-                           // loadingOutputTextView.append(" Rest of Round");
 
 
                         } else if (dareUnusedCounter <= 1) {
@@ -104,9 +101,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                                 properties.setNumVoted(0);
                                 properties.setRoundOneComplete(true);
                                 properties.setDareRoundRandomized(false);
-
-                               // loadingOutputTextView.append(" Round 2");
-
 
                                 currentLobby.child("Properties").setValue(properties);
                                 currentLobby.child("Dares").setValue("");
@@ -124,8 +118,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                                 properties.setNumVoted(0);
                                 properties.setRoundTwoComplete(true);
 
-                               // loadingOutputTextView.append(" Final Round");
-
                                 currentLobby.child("Properties").setValue(properties);
                                 currentLobby.child("Dares").setValue("");
 
@@ -137,11 +129,9 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                             }
                         }
-
                     currentLobby.removeEventListener(this);
 
                 }
-
             }
 
             @Override
@@ -150,7 +140,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void randomizeRemainingRoundDares() {
 
@@ -172,7 +161,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                         if (currentDare.getDareUsed().equals("Unused")) {
 
                             dareUIDS.add(data.getKey());
-
                         }
                     }
 
@@ -197,7 +185,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
 
                         }
 
-
                         currentLobby.child("Dares").child(randomDare1).child("dareUsed").setValue("selectOne");
                         currentLobby.child("Dares").child(randomDare2).child("dareUsed").setValue("selectTwo");
 
@@ -208,7 +195,6 @@ public class RHostEndPartRoundActivity extends AppCompatActivity {
                         currentProperties.setDareRoundRandomized(true);
 
                         currentLobby.child("Properties").setValue(currentProperties);
-
 
                         if (UIDPLAYER.equals(randomDare1) || UIDPLAYER.equals(randomDare2)) {
 

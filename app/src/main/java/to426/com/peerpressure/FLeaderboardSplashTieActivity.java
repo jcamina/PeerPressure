@@ -53,10 +53,10 @@ public class FLeaderboardSplashTieActivity extends AppCompatActivity implements 
 
         mainMenuButton.setOnClickListener(this);
 
+        //Set Leaderboards In A Tie
         setLeaderboardDisplay();
 
     }
-
 
     public void setLeaderboardDisplay() {
 
@@ -85,18 +85,14 @@ public class FLeaderboardSplashTieActivity extends AppCompatActivity implements 
                         }
                     });
 
-
                     // StringBuilder Used to Print Array List To TextView
                     StringBuilder builder = new StringBuilder();
                     for (Player details : playerScores) {
                         builder.append(details.getNickname() + " Score: " + details.getScore() + "\n");
                     }
 
-
                     leaderBoardOutputTextView.setText(builder.toString());
-
                 }
-
             }
 
             @Override
@@ -120,6 +116,7 @@ public class FLeaderboardSplashTieActivity extends AppCompatActivity implements 
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

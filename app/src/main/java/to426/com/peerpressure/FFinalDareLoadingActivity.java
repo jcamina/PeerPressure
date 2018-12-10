@@ -34,6 +34,7 @@ public class FFinalDareLoadingActivity extends AppCompatActivity {
 
         }
 
+        //Set Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,6 +72,7 @@ public class FFinalDareLoadingActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

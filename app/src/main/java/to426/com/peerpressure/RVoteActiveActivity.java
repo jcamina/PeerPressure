@@ -50,6 +50,7 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
         dareOneButton.setOnClickListener(this);
         dareTwoButton.setOnClickListener(this);
 
+        //Set Dare Vote Button Text
         setDareButton("selectOne");
         setDareButton("selectTwo");
 
@@ -133,7 +134,6 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
                 // ...
             }
         });
-
     }
 
     @Override
@@ -164,7 +164,6 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
             finish();
 
         }
-
     }
 
     //Disable Back Button

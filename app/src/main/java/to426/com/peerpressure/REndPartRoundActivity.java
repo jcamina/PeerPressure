@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 public class REndPartRoundActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
-   // public TextView loadingOutputTextViewTwo;
-   // public ImageView spinningImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +37,6 @@ public class REndPartRoundActivity extends AppCompatActivity {
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //loadingOutputTextViewTwo = findViewById(R.id.loadingOutputTextViewTwo);
-
-        //spinningImageView = findViewById(R.id.spinningImageView);
-       // Glide.with(this).asGif().load(R.drawable.spinner).into(spinningImageView);
 
     }
 
@@ -71,8 +61,6 @@ public class REndPartRoundActivity extends AppCompatActivity {
                         final String UIDPLAYER = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         Dare playerDare = dataSnapshot.child("Dares").child(UIDPLAYER).getValue(Dare.class);
-
-                        // loadingOutputTextViewTwo.append(" Rest of Round");
 
                          if (playerDare.getDareUsed().equals("selectOne") || playerDare.getDareUsed().equals("selectTwo")) {
 
@@ -99,9 +87,6 @@ public class REndPartRoundActivity extends AppCompatActivity {
                     //First Round End Operation
                     if (currentProperties.getRoundOneComplete() && !currentProperties.getRoundTwoComplete() && !currentProperties.getDareRoundRandomized() && currentProperties.getGameProgression().equals("Round 1")) {
 
-                       // loadingOutputTextViewTwo.append(" Round Two");
-
-
                         Intent RHostEndPartRoundAToRoundSplash = new Intent(REndPartRoundActivity.this, RoundSplashActivity.class);
                         RHostEndPartRoundAToRoundSplash.putExtra("lobbyCode", lobbyCode);
                         startActivity(RHostEndPartRoundAToRoundSplash);
@@ -109,13 +94,10 @@ public class REndPartRoundActivity extends AppCompatActivity {
                         currentLobby.removeEventListener(this);
 
                         finish();
-
                      }
 
                     //Second Round Regular Operation
                     if (currentProperties.getDareRoundRandomized() && currentProperties.getRoundOneComplete() && !currentProperties.getRoundTwoComplete()) {
-
-                       // loadingOutputTextViewTwo.append(" Rest of Round");
 
                         final String UIDPLAYER = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -145,8 +127,6 @@ public class REndPartRoundActivity extends AppCompatActivity {
 
                     //FINAL ROUND ENTRANCE!
                     if (currentProperties.getRoundOneComplete() && currentProperties.getRoundTwoComplete()) {
-
-                        //loadingOutputTextViewTwo.append(" Final Round");
 
                         Intent RHostEndPartRoundAToRoundSplash = new Intent(REndPartRoundActivity.this, FFinalDareLoadingActivity.class);
                         RHostEndPartRoundAToRoundSplash.putExtra("lobbyCode", lobbyCode);

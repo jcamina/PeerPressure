@@ -89,7 +89,6 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
                 return false;
             }
         });
-
     }
 
 
@@ -146,6 +145,7 @@ public class JoinGameActivity extends AppCompatActivity implements View.OnClickL
 
                     if (dataSnapshot.exists()) {
 
+                        //Check To Make Sure Lobby is 8 players or Less
                         if (!(dataSnapshot.child("Players").child(UIDCLIENT).exists()) && (dataSnapshot.child("Players").getChildrenCount() < 9)) {
 
                             //Creates Player within the Lobby

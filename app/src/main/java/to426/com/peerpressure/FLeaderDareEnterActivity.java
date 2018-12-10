@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -84,7 +82,6 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
         if (v == submitFinalDareButton) {
 
             submitDare();
-
         }
     }
 
@@ -100,6 +97,7 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
 
             submitFinalDareButton.setEnabled(false);
 
+            //Final Dare Submit Creation of Dare!
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares").setValue("");
             FirebaseDatabase.getInstance().getReference().child("Games").child(lobbyCode).child("Dares")
                     .child("Final Dare").setValue(new Dare("Final Dare", dareSubmissionText,0,"selectOne",0));
@@ -109,7 +107,6 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
             startActivity(FLeaderDareEnterToFFinalDareSplash);
 
             finish();
-
         }
     }
 
@@ -127,6 +124,7 @@ public class FLeaderDareEnterActivity extends AppCompatActivity implements View.
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

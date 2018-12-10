@@ -1,10 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,16 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class CreateNewGameLobbyActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,7 +22,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
     public TextView lobbyCodeTextView;
     public TextView lobbyPlayersTextView;
     public String lobbyCode = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +51,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
     }
 
-
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,7 +59,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
         return true;
     }
-
 
     @Override
     protected void onStart() {
@@ -90,11 +79,9 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
                         Player currentPlayer = data.getValue(Player.class);
                         lobbyPlayersTextView.append(currentPlayer.getNickname() + "\n\n");
-
                     }
                 }
             }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -102,7 +89,6 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
             }
         });
     }
-
 
     @Override
     public void onClick(View v) {
@@ -122,20 +108,19 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
 
                         GameProperties properties = dataSnapshot.getValue(GameProperties.class);
 
-                            if (properties.getGameProgression().equals("Lobby")){
+                        if (properties.getGameProgression().equals("Lobby")){
 
-                                properties.setGameProgression("Round 1");
+                            //Start the Game With "Round One"
+                            properties.setGameProgression("Round 1");
 
-                                lobbyRef.setValue(properties);
+                            lobbyRef.setValue(properties);
 
-                                Intent newGameLobbyToRoundSplash = new Intent(CreateNewGameLobbyActivity.this,
-                                        RoundSplashActivity.class);
-
-                                newGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
-                                startActivity(newGameLobbyToRoundSplash);
-                                finish();
-
-                            }
+                            Intent newGameLobbyToRoundSplash = new Intent(CreateNewGameLobbyActivity.this,
+                                    RoundSplashActivity.class);
+                            newGameLobbyToRoundSplash.putExtra("lobbyCode", lobbyCode);
+                            startActivity(newGameLobbyToRoundSplash);
+                            finish();
+                        }
                     }
                 }
 
@@ -152,6 +137,7 @@ public class CreateNewGameLobbyActivity extends AppCompatActivity implements Vie
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

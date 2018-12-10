@@ -1,8 +1,6 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,18 +16,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 public class FFinalDareSplashActivity extends AppCompatActivity {
 
     public TextView finalDareParticipantOneTextView;
     public TextView finalDareParticipantTwoTextView;
 
     public String lobbyCode = "";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +63,12 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
 
                             Player currentPlayer = data.getValue(Player.class);
 
+                            //Populate Text Fields with Correct Names
                             if (data.getKey().equals(properties.getFinalDareLoserOne())) {
                                 finalDareParticipantOneTextView.setText(currentPlayer.getNickname());
 
                             } else if (data.getKey().equals(properties.getFinalDareLoserTwo())) {
                                 finalDareParticipantTwoTextView.setText(currentPlayer.getNickname());
-
                             }
                         }
 
@@ -100,8 +92,8 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
                                     finish();
                                 }
                             }
-
                             public void onTick(long millisUntilFinished) {
+
                             }
 
                         }.start();
@@ -133,6 +125,7 @@ public class FFinalDareSplashActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

@@ -41,7 +41,6 @@ public class RVoteWaitActivity extends AppCompatActivity {
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override

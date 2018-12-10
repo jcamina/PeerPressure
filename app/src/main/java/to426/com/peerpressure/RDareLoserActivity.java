@@ -35,6 +35,7 @@ public class RDareLoserActivity extends AppCompatActivity {
         Intent retrieveCode = getIntent();
         Bundle bundle = retrieveCode.getExtras();
 
+        //Fire Gif
         ImageView imageView = (ImageView) findViewById(R.id.fireImageView);
         Glide.with(this).asGif().load(R.drawable.fire).into(imageView);
 
@@ -43,6 +44,7 @@ public class RDareLoserActivity extends AppCompatActivity {
 
         }
 
+        //Create Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -156,20 +158,17 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                     GameProperties properties = dataSnapshot.child("Properties").getValue(GameProperties.class);
 
-
                     if (properties.getNumVoted() == (dataSnapshot.child("Players").getChildrenCount() - 1) ) {
 
                         final String UIDCLIENT = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         Player currentPlayer = dataSnapshot.child("Players").child(UIDCLIENT).getValue(Player.class);
 
-
                         if(currentPlayer.getIsHost()){
 
                             Intent RDareLoserToRHostEndPartRound = new Intent(RDareLoserActivity.this,RHostEndPartRoundActivity.class);
                             RDareLoserToRHostEndPartRound.putExtra("lobbyCode", lobbyCode);
                             startActivity(RDareLoserToRHostEndPartRound);
-
                             currentLobby.removeEventListener(this); // stops from assigning
                             finish();
 
@@ -184,9 +183,7 @@ public class RDareLoserActivity extends AppCompatActivity {
 
                         currentLobby.removeEventListener(this);
                     }
-
                 }
-
             }
 
             @Override
@@ -225,7 +222,6 @@ public class RDareLoserActivity extends AppCompatActivity {
             this.startActivity(toRules);
 
             return true;
-
         }
         return super.onOptionsItemSelected(item);
     }

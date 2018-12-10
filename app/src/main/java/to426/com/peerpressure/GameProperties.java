@@ -17,7 +17,9 @@ public class GameProperties {
 
     }
 
-    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized, int inNumVoted, boolean inRoundOneComplete, boolean inRoundTwoComplete){
+    public GameProperties(String inGameProgression, String inGameType, boolean inDareRoundRandomized,
+                          int inNumVoted, boolean inRoundOneComplete, boolean inRoundTwoComplete){
+
         gameProgression = inGameProgression;
         gameType = inGameType;
         dareRoundRandomized = inDareRoundRandomized;
@@ -27,7 +29,9 @@ public class GameProperties {
     }
 
     //Final Dare Properties
-    public GameProperties(String inGameProgression, String inGameType, int inNumVoted, boolean inRoundOneComplete, boolean inRoundTwoComplete, String inFinalDareLoserOne, String inFinalDareLoserTwo){
+    public GameProperties(String inGameProgression, String inGameType, int inNumVoted, boolean inRoundOneComplete,
+                          boolean inRoundTwoComplete, String inFinalDareLoserOne, String inFinalDareLoserTwo){
+
         gameProgression = inGameProgression;
         gameType = inGameType;
         numVoted = inNumVoted;

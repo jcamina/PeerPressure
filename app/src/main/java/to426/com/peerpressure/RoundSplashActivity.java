@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,7 +87,6 @@ public class RoundSplashActivity extends AppCompatActivity {
                     roundTextView.setText(roundTitle);
 
                     lobbyCheckRef.removeEventListener(this); // stops from assigning every single one as selected
-
 
                 }
             }

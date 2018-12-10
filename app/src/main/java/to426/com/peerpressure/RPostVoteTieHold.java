@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +40,6 @@ public class RPostVoteTieHold extends AppCompatActivity {
             lobbyCode = (String) bundle.get("lobbyCode");
         }
     }
-
 
     @Override
     protected void onStart() {
@@ -98,7 +96,6 @@ public class RPostVoteTieHold extends AppCompatActivity {
 
                             hostLobbyRef.child("Dares").child(dareTwoUID).setValue(winnerDare);
 
-
                         }
                     }
                 }
@@ -109,8 +106,6 @@ public class RPostVoteTieHold extends AppCompatActivity {
                 // ...
             }
         });
-
-
 
         new CountDownTimer(4000, 1000) {
             public void onFinish() {
@@ -203,11 +198,8 @@ public class RPostVoteTieHold extends AppCompatActivity {
                                     finish();
 
                                 }
-
                             }
-
                         }
-
                     }
 
                     @Override
@@ -215,9 +207,6 @@ public class RPostVoteTieHold extends AppCompatActivity {
                         // ...
                     }
                 });
-
-
-
             }
 
             public void onTick(long millisUntilFinished) {

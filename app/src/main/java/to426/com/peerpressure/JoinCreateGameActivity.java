@@ -1,19 +1,13 @@
 package to426.com.peerpressure;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class JoinCreateGameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,7 +34,6 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -86,7 +79,6 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
             finish();
 
         }
-
     }
 
     //Disable Back Button
@@ -94,6 +86,7 @@ public class JoinCreateGameActivity extends AppCompatActivity implements View.On
     public void onBackPressed() {
     }
 
+    //Info Button OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

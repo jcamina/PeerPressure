@@ -64,7 +64,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         if (v == mehButton) {
 
-            changeScore(-200);
+            changeScore(-300);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -81,7 +81,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == okButton) {
 
-            changeScore(-100);
+            changeScore(-150);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -113,7 +113,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == greatButton) {
 
-            changeScore(100);
+            changeScore(150);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);
@@ -129,7 +129,7 @@ public class RVotePerformanceActivity extends AppCompatActivity implements View.
 
         } else if (v == amazingButton) {
 
-            changeScore(200);
+            changeScore(300);
 
             mehButton.setEnabled(false);
             okButton.setEnabled(false);

@@ -103,12 +103,12 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                                     if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
 
-                                        loopingPlayer.setScore(currentPlayer.getScore() + 2000);
+                                        loopingPlayer.setScore(loopingPlayer.getScore() + 2000);
                                         lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
 
                                     } else if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
 
-                                        loopingPlayer.setScore(currentPlayer.getScore() - 2000);
+                                        loopingPlayer.setScore(loopingPlayer.getScore() - 2000);
                                         lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
                                     }
 
@@ -117,12 +117,12 @@ public class FBiggestLoserSuspenseActivity extends AppCompatActivity {
 
                                     if (finalDare.getVoteCount() < finalDare.getVoteCountExtra()) {
 
-                                        loopingPlayer.setScore(currentPlayer.getScore() + 2000);
+                                        loopingPlayer.setScore(loopingPlayer.getScore() + 2000);
                                         lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
 
                                     } else if (finalDare.getVoteCount() > finalDare.getVoteCountExtra()) {
 
-                                        loopingPlayer.setScore(currentPlayer.getScore() - 2000);
+                                        loopingPlayer.setScore(loopingPlayer.getScore() - 2000);
                                         lobbyRef.child("Players").child(data.getKey()).setValue(loopingPlayer);
                                     }
                                 }

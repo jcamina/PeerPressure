@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/logo"
+        android:icon="@drawable/pplogo"
+        app:showAsAction="ifRoom|withText"
+        android:orderInCategory="300"
+
+        android:title="logo">
+
+    </item>
+
+    <item
+        android:id="@+id/action_item_two"
+        android:title="Help"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
+
+</menu>

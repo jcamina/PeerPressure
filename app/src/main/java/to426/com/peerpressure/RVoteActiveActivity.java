@@ -121,6 +121,11 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
 
                             dares.child(data.getKey()).setValue(currentDare);
 
+                            Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
+                            RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
+                            startActivity(RVoteActiveToRAfterVoteHold);
+                            finish();
+
                         } catch (Exception e) {
                             Toast.makeText(RVoteActiveActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
 
@@ -146,22 +151,12 @@ public class RVoteActiveActivity extends AppCompatActivity implements View.OnCli
             dareTwoButton.setEnabled(false);
             dareOneButton.setEnabled(false);
 
-            Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
-            RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
-            startActivity(RVoteActiveToRAfterVoteHold);
-            finish();
-
         } else if (v == dareTwoButton) {
 
             incrementDareVote("selectTwo");
 
             dareTwoButton.setEnabled(false);
             dareOneButton.setEnabled(false);
-
-            Intent RVoteActiveToRAfterVoteHold = new Intent(RVoteActiveActivity.this,RPostVoteHold.class);
-            RVoteActiveToRAfterVoteHold.putExtra("lobbyCode", lobbyCode);
-            startActivity(RVoteActiveToRAfterVoteHold);
-            finish();
 
         }
     }

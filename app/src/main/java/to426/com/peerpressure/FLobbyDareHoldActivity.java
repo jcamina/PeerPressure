@@ -3,6 +3,8 @@ package to426.com.peerpressure;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class FLobbyDareHoldActivity extends AppCompatActivity {
 
     public String lobbyCode = "";
+    public MediaPlayer mm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,12 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mm = new MediaPlayer();
+        mm = MediaPlayer.create(this, R.raw.theme);
+        mm.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mm.setLooping(true);
+        mm.start();
 
         final DatabaseReference hostCheckRef = FirebaseDatabase.getInstance().getReference()
                 .child("Games").child(lobbyCode).child("Dares");
@@ -100,5 +109,13 @@ public class FLobbyDareHoldActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (this.isFinishing()){
+            mm.stop();
+        }
     }
 }

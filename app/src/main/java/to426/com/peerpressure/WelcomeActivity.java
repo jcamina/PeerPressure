@@ -1,6 +1,9 @@
 package to426.com.peerpressure;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +17,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
     public Button beginButton;
     public TextView peerPressureTitleTextView;
+    public MediaPlayer mm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         //Set The Tool Bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mm = new MediaPlayer();
+        mm = MediaPlayer.create(this, R.raw.theme);
+        mm.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mm.setLooping(true);
+        mm.start();
+
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -42,7 +53,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
-
     @Override
     public void onClick(View v) {
 
@@ -51,7 +61,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         if (v == beginButton) {
             beginButton.setEnabled(false);
             startActivity(welcomeToLogin);
-
             finish();
         }
     }
@@ -78,5 +87,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     //Disable Back Button
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (this.isFinishing()){
+            mm.stop();
+        }
     }
 }
